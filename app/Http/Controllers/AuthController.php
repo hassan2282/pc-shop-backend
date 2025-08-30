@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthUpdateProfileRequest;
 use App\Http\Resources\UserApiResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -79,13 +80,19 @@ class AuthController extends Controller
         ])->cookie('jwt_token', $token, 60, '/', null, true, true, 'None');
     }
 
-    public function update(Request $request, $id)
+    public function update(AuthUpdateProfileRequest $request, $id)
     {
         $user = User::findOrFail($id);
-
+        $limitRequest = $request->only(['first_name','last_name','email','phone']);
         if ($user->id !== \auth()->user()->id){
-            return back();
+            return back()->with('error','شما اجازه ویرایش را ندارید');
         };
+
+        $updatedUser = $user->update($limitRequest);
+
+        dd($updatedUser);
+
+
     }
 
     /**

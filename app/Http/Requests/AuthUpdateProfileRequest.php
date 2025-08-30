@@ -11,7 +11,7 @@ class AuthUpdateProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,10 +22,18 @@ class AuthUpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first-name' => ['required','min:3', 'max:255', 'string'],
-            'last-name' => 'required|min:3|max:255|string|',
-            'phone' => 'numeric|max:11|regex:/^09\d{9}$/',
+            'first_name' => ['required','min:3', 'max:255', 'string'],
+            'last_name' => 'required|min:3|max:255|string|',
+            'phone' => 'digits:11|regex:/^[0][9][0-9]{9,9}$/',
             'email' => 'max:255|min:5|unique:users|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'phone.regex' => 'شماره تلفن وارد شده معتبر نمی باشد',
+            'email.regex' => 'ایمیل وارد شده معتبر نمی باشد',
         ];
     }
 }
