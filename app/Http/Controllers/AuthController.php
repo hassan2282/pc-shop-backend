@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class AuthController extends Controller
 {
@@ -82,16 +83,20 @@ class AuthController extends Controller
 
     public function update(AuthUpdateProfileRequest $request, $id)
     {
-        $user = User::findOrFail($id);
-        $limitRequest = $request->only(['first_name','last_name','email','phone']);
-        if ($user->id !== \auth()->user()->id){
-            return back()->with('error','شما اجازه ویرایش را ندارید');
-        };
+        try {
+            $user = User::find($id);
+            if (!$user) return response()->json(['error' => 'کاربر یافت نشد'], ResponseAlias::HTTP_BAD_REQUEST);
+            $limitRequest = $request->only(['first_name','last_name','email','phone']);
+            if ($user->id !== \auth()->user()->id){
+                return response()->json(['error' => 'آیدی کاربر در دسترس نیست'], ResponseAlias::HTTP_BAD_REQUEST);
+            };
 
-        $updatedUser = $user->update($limitRequest);
-
-        dd($updatedUser);
-
+            $updatedUser = $user->update($limitRequest);
+            if ($updatedUser) return response()->json(['success' => 'آپدیت با موفقیت انجام شد'], ResponseAlias::HTTP_OK);
+            if (!$updatedUser) return response()->json(['error' => 'متاسفانه آپدیتی صورت نگرفت'], ResponseAlias::HTTP_BAD_REQUEST);
+        }catch (\Exception $e) {
+            return response()->json($e->getMessage(), ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
     }
 
