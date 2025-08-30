@@ -30,7 +30,7 @@ class User extends Authenticatable implements JWTSubject
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
     ];
@@ -45,6 +45,9 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
+    protected $except = [
+        'jwt_token',
+    ];
     /**
      * Get the attributes that should be cast.
      *
