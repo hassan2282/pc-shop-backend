@@ -28,7 +28,7 @@ class AuthController extends Controller
     {
         // اعتبارسنجی داده‌های ورودی
         $validator = Validator::make(request()->all(), [
-            'username' => 'required|string|max:255|min:6',
+            'username' => 'required|unique:users|string|max:255|min:6',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -87,10 +87,6 @@ class AuthController extends Controller
             $user = User::find($id);
             if (!$user) return response()->json(['error' => 'کاربر یافت نشد'], ResponseAlias::HTTP_BAD_REQUEST);
             $limitRequest = $request->only(['first_name','last_name','email','phone']);
-            if ($user->id !== \auth()->user()->id){
-                return response()->json(['error' => 'آیدی کاربر در دسترس نیست'], ResponseAlias::HTTP_BAD_REQUEST);
-            };
-
             $updatedUser = $user->update($limitRequest);
             if ($updatedUser) return response()->json(['success' => 'آپدیت با موفقیت انجام شد'], ResponseAlias::HTTP_OK);
             if (!$updatedUser) return response()->json(['error' => 'متاسفانه آپدیتی صورت نگرفت'], ResponseAlias::HTTP_BAD_REQUEST);
@@ -107,8 +103,8 @@ class AuthController extends Controller
      */
     public function me()
     {
-        # Here we just get information about current user
-        return response()->json(auth()->user());
+        $targetUser = userApiResource::make(auth()->user());
+        return response()->json($targetUser);
     }
 
     /**
