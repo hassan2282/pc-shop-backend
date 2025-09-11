@@ -103,6 +103,9 @@ class AuthController extends Controller
      */
     public function me()
     {
+        if(!!! auth()->user()){
+            return response()->json('user not founded');
+        }
         $targetUser = userApiResource::make(auth()->user());
         return response()->json($targetUser);
     }

@@ -22,8 +22,8 @@ class AuthUpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required','min:3', 'max:255', 'string'],
-            'last_name' => 'required|min:3|max:255|string|',
+            'first_name' => ['nullable','min:3', 'max:255', 'string'],
+            'last_name' => 'nullable|min:3|max:255|string|',
             'phone' => 'nullable|digits:11|regex:/^[0][9][0-9]{9,9}$/',
             'email' => 'nullable|max:255|min:5|unique:users|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i'
         ];
