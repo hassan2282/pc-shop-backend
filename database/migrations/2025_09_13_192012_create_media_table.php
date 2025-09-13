@@ -16,7 +16,7 @@ return new class extends Migration
             $table->morphs('mediable');
             $table->string('name');
             $table->integer('size');
-            $table->enum('mimeType',['jpg, png, jpeg, webp']);
+            $table->enum('mimeType',['jpg','jpeg','png','webp','gif','image/jpeg','image/png']);
             $table->string('alt')->nullable();
             $table->string('slug')->nullable();
             $table->timestamps();

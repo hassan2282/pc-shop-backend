@@ -17,6 +17,7 @@ class MediaService
 
     public function create(Request $request)
     {
+
         $image = $request->media;
         $image_name = time() . '-' . Str::random(20) . '.' . $image->getClientOriginalExtension();
         $user = auth()->user();

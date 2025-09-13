@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AuthUpdateProfileRequest;
 use App\Http\Resources\UserApiResource;
 use App\Models\User;
+use App\Services\MediaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -18,7 +19,7 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(readonly protected MediaService $mediaService)
     {
 //        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
@@ -94,6 +95,11 @@ class AuthController extends Controller
             return response()->json($e->getMessage(), ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    public function avatar(Request $request)
+    {
+        return $this->mediaService->create($request);
     }
 
     /**

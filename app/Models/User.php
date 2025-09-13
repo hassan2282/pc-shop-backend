@@ -63,4 +63,10 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
         ];
     }
+
+
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
 }
