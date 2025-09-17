@@ -37,13 +37,6 @@ class MediaService
         }catch (\Exception $exception){
 
             Storage::disk('public')->delete($path);
-
-            Log::error("Image Optimization Error: " . $exception->getMessage(),[
-                'file_path' => $absolutePath,
-                'file_size' => $image->getSize(),
-                'error_details' => $exception->getTraceAsString()
-            ]);
-
             return response()->json(
                 'خطا در بهینه سازی تصویر - لطفاً تصویر با کیفیت پایینتر آپلود کنید',
                 HttpResponse::HTTP_INTERNAL_SERVER_ERROR
