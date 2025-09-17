@@ -11,7 +11,7 @@ use Spatie\ImageOptimizer\Optimizers\Svgo;
 
 class ImageOptimizerService
 {
-    public static function optimize(string $path)
+    public static function optimize(string $absolutePath)
     {
         $chain = OptimizerChainFactory::create();
 
@@ -22,6 +22,6 @@ class ImageOptimizerService
         $chain->addOptimizer(new Cwebp(['-m 6','-pass 10','-q 80'], 'cwebp'));
         $chain->addOptimizer(new Svgo([], 'svgo'));
 
-        $chain->optimize($path);
+        $chain->optimize($absolutePath);
     }
 }

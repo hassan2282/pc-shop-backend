@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Repositories\Media\MediaRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
@@ -29,8 +30,25 @@ class MediaService
 
         $image_name = time() . '-' . Str::random(20) . '.' . $image->getClientOriginalExtension();
         $path = $image->storeAs('media', $image_name, 'public');
-        $absolutePath = Storage::disk('public')->path($path);
-        ImageOptimizerService::optimize($absolutePath);
+
+        try {
+            $absolutePath = Storage::disk('public')->path($path);
+            ImageOptimizerService::optimize($absolutePath);
+        }catch (\Exception $exception){
+
+            Storage::disk('public')->delete($path);
+
+            Log::error("Image Optimization Error: " . $exception->getMessage(),[
+                'file_path' => $absolutePath,
+                'file_size' => $image->getSize(),
+                'error_details' => $exception->getTraceAsString()
+            ]);
+
+            return response()->json(
+                'خطا در بهینه سازی تصویر - لطفاً تصویر با کیفیت پایینتر آپلود کنید',
+                HttpResponse::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
 
         if($user) {
                     $media = [
