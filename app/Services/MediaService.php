@@ -27,6 +27,14 @@ class MediaService
         $user = auth()->user();
         if(!$user) return response()->json('متاسفانه کاربر یافت نشد');
 
+        if($user->media?->first()){
+            $storageDelete =  Storage::disk('public')->delete('/media/'. $user->media->first()->name);
+            !$storageDelete && throw new \Exception('متاسفانه فایل پروفایل قبلی از دیتابیس حذف نشد!!!');;
+            $deleteRes =  $this->mediaRepository->delete($user->media->first()->id);
+            !$deleteRes && throw new \Exception('متاسفانه اطلاعات پروفایل قبلی از دیتابیس حذف نشد!!!');
+        }
+
+
         $image_name = time() . '-' . Str::random(20) . '.' . $image->getClientOriginalExtension();
         $path = $image->storeAs('media', $image_name, 'public');
 

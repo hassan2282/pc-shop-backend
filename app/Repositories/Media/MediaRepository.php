@@ -12,4 +12,16 @@ class MediaRepository implements MediaRepositoryInterface
         $res = Media::create($media);
         return response()->json($res);
     }
+
+    public function find(int $id)
+    {
+        return Media::find($id);
+    }
+
+    public function delete(int $id)
+    {
+        $targetMedia = $this->find($id);
+        $deleteRes =  $targetMedia->delete();
+        return response()->json($deleteRes);
+    }
 }
