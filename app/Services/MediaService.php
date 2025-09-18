@@ -53,7 +53,7 @@ class MediaService
 
                     $res =  $this->mediaRepository->create($media);
                     if ($res) {
-                        return response()->json('Media Created Successfully', HttpResponse::HTTP_CREATED);
+                        return response()->json(['Media Created Successfully' , 'path' => $image_name], HttpResponse::HTTP_CREATED);
                     }else {
                         return response()->json('متاسفانه خطایی از سمت سرور رخ داده است',HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
                     }

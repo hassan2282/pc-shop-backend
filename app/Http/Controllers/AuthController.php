@@ -7,8 +7,6 @@ use App\Http\Resources\UserApiResource;
 use App\Models\User;
 use App\Services\MediaService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -87,7 +85,9 @@ class AuthController extends Controller
         try {
             $user = User::find($id);
             if (!$user) return response()->json(['error' => 'کاربر یافت نشد'], ResponseAlias::HTTP_BAD_REQUEST);
-            $limitRequest = $request->only(['first_name','last_name','email','phone']);
+//            $limitRequest = $request->only(['first_name','last_name','email','phone']);
+            $limitRequest = array_filter($request
+                ->only(['first_name', 'last_name', 'email', 'phone']), fn($value) => !empty($value));
             $updatedUser = $user->update($limitRequest);
             if ($updatedUser) return response()->json(['success' => 'آپدیت با موفقیت انجام شد'], ResponseAlias::HTTP_OK);
             if (!$updatedUser) return response()->json(['error' => 'متاسفانه آپدیتی صورت نگرفت'], ResponseAlias::HTTP_BAD_REQUEST);
@@ -125,7 +125,7 @@ class AuthController extends Controller
     {
         auth()->logout(); # This is just logout function that will destroy access token of current user
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully logged out'])->withoutCookie('jwt_token');
     }
 
     /**
