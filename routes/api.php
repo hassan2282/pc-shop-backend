@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\CityController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,5 +16,12 @@ Route::group([
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+});
+
+Route::group([
+    'middleware' => 'api',
+], function () {
     Route::post('profile-avatar', [AuthController::class, 'avatar']);
+    Route::get('provinces', [ProvinceController::class, 'index']);
+    Route::get('cities/{id}', [CityController::class, 'find']);
 });
