@@ -51,7 +51,7 @@ class AuthController extends Controller
         return response()->json([
             'user' => $userResource,
             'authorisation' => $this->respondWithToken($token)
-        ])->cookie('jwt_token', $token, 10080, '/', null, true, true, 'None');
+        ])->cookie('jwt_token', $token, 60, '/', null, true, true, 'None');
     }
 
 
@@ -77,7 +77,7 @@ class AuthController extends Controller
         return response()->json([
             'user' => $authUser,
             'authorisation' => $this->respondWithToken($token)
-        ])->cookie('jwt_token', $token, 10080, '/', null, true, true, 'None');
+        ])->cookie('jwt_token', $token, 60, '/', null, true, true, 'None');
     }
 
     public function update(AuthUpdateProfileRequest $request, $id)
@@ -109,7 +109,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        if(!!! auth()->user()){
+        if(! auth()->user()){
             return response()->json('user not founded', ResponseAlias::HTTP_UNAUTHORIZED );
         }
         $targetUser = userApiResource::make(auth()->user());

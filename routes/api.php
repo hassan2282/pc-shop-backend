@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,4 +25,6 @@ Route::group([
     Route::post('profile-avatar', [AuthController::class, 'avatar']);
     Route::get('provinces', [ProvinceController::class, 'index']);
     Route::get('cities/{id}', [CityController::class, 'find']);
+    Route::post('address', [AddressController::class, 'create']);
+    Route::get('user-address/{id}', [AddressController::class, 'find']);
 });

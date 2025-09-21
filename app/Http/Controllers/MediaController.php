@@ -28,29 +28,6 @@ class MediaController extends Controller
         return $this->mediaService->create($request);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Media $media)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Media $media)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Media $media)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

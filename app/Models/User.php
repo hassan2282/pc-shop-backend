@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -65,8 +67,14 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-    public function media()
+    public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'mediable');
+    }
+
+
+    public function address(): HasOne
+    {
+        return $this->hasOne(Address::class);
     }
 }
