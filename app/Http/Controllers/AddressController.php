@@ -22,4 +22,9 @@ class AddressController extends Controller
         return $this->addressService->find($id);
     }
 
+    public function delete(int $id)
+    {
+        return $this->addressService->delete($id);
+    }
+
 }

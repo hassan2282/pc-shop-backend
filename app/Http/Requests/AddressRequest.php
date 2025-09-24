@@ -24,7 +24,7 @@ class AddressRequest extends FormRequest
         return [
             'province_id' => 'required|exists:provinces,id',
             'city_id' => 'required|exists:cities,id',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id|unique:addresses',
             'postal_code' => 'required|numeric|digits:10',
             'address' => 'required|string|max:1000',
         ];

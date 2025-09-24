@@ -27,4 +27,5 @@ Route::group([
     Route::get('cities/{id}', [CityController::class, 'find']);
     Route::post('address', [AddressController::class, 'create']);
     Route::get('user-address/{id}', [AddressController::class, 'find']);
+    Route::delete('delete-address/{id}', [AddressController::class, 'delete']);
 });

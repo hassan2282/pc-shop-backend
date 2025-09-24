@@ -34,4 +34,13 @@ class AddressService
 
         return response()->json($limitAddress, HttpResponse::HTTP_OK);
     }
+
+    public function delete(int $id)
+    {
+        if(auth()->user()->address->id === $id) {
+            return $this->addressRepository->delete($id);
+        }else {
+         return response()->json('آیدی وارد شده معتبر نیست');
+        }
+    }
 }
