@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthUpdateProfileRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Resources\UserApiResource;
 use App\Models\User;
 use App\Services\MediaService;
@@ -85,7 +86,6 @@ class AuthController extends Controller
         try {
             $user = User::find($id);
             if (!$user) return response()->json(['error' => 'کاربر یافت نشد'], ResponseAlias::HTTP_BAD_REQUEST);
-//            $limitRequest = $request->only(['first_name','last_name','email','phone']);
             $limitRequest = array_filter($request
                 ->only(['first_name', 'last_name', 'email', 'phone']), fn($value) => !empty($value));
             $updatedUser = $user->update($limitRequest);
@@ -95,6 +95,21 @@ class AuthController extends Controller
             return response()->json($e->getMessage(), ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    public function update_password(UpdatePasswordRequest $request)
+    {
+        try {
+            $user = User::find(auth()->user()->id);
+            if (!$user) return response()->json(['error' => 'کاربر یافت نشد'], ResponseAlias::HTTP_BAD_REQUEST);
+            $updatePassword = $user->update([
+                'password' => bcrypt(request('password')),
+            ]);
+            if ($updatePassword) return response()->json(['success' => 'آپدیت با موفقیت انجام شد'], ResponseAlias::HTTP_OK);
+            if (!$updatePassword) return response()->json(['error' => 'متاسفانه آپدیتی صورت نگرفت'], ResponseAlias::HTTP_BAD_REQUEST);
+        }catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function avatar(Request $request)
