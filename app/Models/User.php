@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -76,5 +77,10 @@ class User extends Authenticatable implements JWTSubject
     public function address(): HasOne
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
     }
 }
