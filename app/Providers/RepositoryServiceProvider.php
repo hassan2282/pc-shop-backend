@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\AdmRepo\User\AdmUserRepository;
+use App\Repositories\AdmRepo\User\AdmUserRepositoryInterface;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepositoryInterface;
 use App\Repositories\Address\AddressRepository;
@@ -20,6 +22,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(EloquentRepositoryInterface::class, BaseRepository::class);
         $this->app->bind(AddressRepositoryInterface::class, AddressRepository::class);
         $this->app->bind(MediaRepositoryInterface::class, MediaRepository::class);
+        $this->app->bind(AdmUserRepositoryInterface::class, AdmUserRepository::class);
     }
 
 }

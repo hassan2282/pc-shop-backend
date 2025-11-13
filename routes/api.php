@@ -30,3 +30,16 @@ Route::group([
     Route::get('user-address/{id}', [AddressController::class, 'find']);
     Route::delete('delete-address/{id}', [AddressController::class, 'delete']);
 });
+
+
+// Start Admin Panel Routes
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'admin'
+], function ()
+{
+    Route::apiResource('users', \App\Http\Controllers\Admin\AdmUserController::class);
+});
+
+// End Admin Panel Routes
