@@ -3,23 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\User\AdmCreateUserRequest;
-use App\Http\Requests\Admin\User\AdmUpdateUserRequest;
-use App\Services\AdmServices\AdmUserService;
+use App\Http\Requests\Admin\Role\AdmCreateRoleRequest;
+use App\Http\Requests\Admin\Role\AdmUpdateRoleRequest;
+use App\Models\Role;
+use App\Services\AdmServices\AdmRoleService;
+use Illuminate\Http\Request;
 
-class AdmUserController extends Controller
+class RoleController extends Controller
 {
 
-    public function __construct(readonly protected AdmUserService $admUserService)
+    public function __construct(readonly protected AdmRoleService $admRoleService)
     {
     }
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return $this->admUserService->index();
+        return $this->admRoleService->index();
     }
 
     /**
@@ -33,9 +34,9 @@ class AdmUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AdmCreateUserRequest $request)
+    public function store(AdmCreateRoleRequest $request)
     {
-        return $this->admUserService->create($request);
+        return $this->admRoleService->create($request);
     }
 
     /**
@@ -43,7 +44,7 @@ class AdmUserController extends Controller
      */
     public function show(string $id)
     {
-        return $this->admUserService->show($id);
+        return $this->admRoleService->show($id);
     }
 
     /**
@@ -57,9 +58,9 @@ class AdmUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdmUpdateUserRequest $request, int $id)
+    public function update(AdmUpdateRoleRequest $request, int $id)
     {
-        return $this->admUserService->update($request, $id);
+        return $this->admRoleService->update($request, $id);
     }
 
     /**
@@ -67,6 +68,6 @@ class AdmUserController extends Controller
      */
     public function destroy(string $id)
     {
-        return $this->admUserService->delete($id);
+        return $this->admRoleService->delete($id);
     }
 }

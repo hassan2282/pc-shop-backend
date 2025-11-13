@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\AdmServices\User;
+namespace App\Services\AdmServices;
 
-use App\Http\Requests\Admin\AdmCreateUserRequest;
-use App\Http\Requests\Admin\AdmUpdateUserRequest;
+use App\Http\Requests\Admin\User\AdmCreateUserRequest;
+use App\Http\Requests\Admin\User\AdmUpdateUserRequest;
 use App\Repositories\AdmRepo\User\AdmUserRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
