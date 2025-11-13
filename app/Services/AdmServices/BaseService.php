@@ -7,11 +7,11 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 abstract class BaseService
 {
-    protected $repository;
-    protected $storeRequest;
-    protected $updateRequest;
+    protected object $repository;
+    protected ?string $storeRequest;
+    protected ?string $updateRequest;
 
-    public function __construct($repository, $storeRequest = null, $updateRequest = null)
+    public function __construct(object $repository, ?string $storeRequest = null, ?string $updateRequest = null)
     {
         $this->repository = $repository;
         $this->storeRequest = $storeRequest;

@@ -9,7 +9,7 @@ use App\Services\AdmServices\AdmPermissionService;
 
 class AdmPermissionController extends Controller
 {
-    public function __construct(readonly protected AdmPermissionService $admPermissionService)
+    public function __construct(readonly protected AdmPermissionService $service)
     {
     }
     /**
@@ -17,7 +17,7 @@ class AdmPermissionController extends Controller
      */
     public function index()
     {
-        return $this->admPermissionService->index();
+        return $this->service->index();
     }
 
     /**
@@ -31,9 +31,9 @@ class AdmPermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePermissionRequest $request)
+    public function store()
     {
-        return $this->admPermissionService->create($request);
+        return $this->service->store();
     }
 
     /**
@@ -41,7 +41,7 @@ class AdmPermissionController extends Controller
      */
     public function show(string $id)
     {
-        return $this->admPermissionService->show($id);
+        return $this->service->show($id);
     }
 
     /**
@@ -55,9 +55,9 @@ class AdmPermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePermissionRequest $request, int $id)
+    public function update(int $id)
     {
-        return $this->admPermissionService->update($request, $id);
+        return $this->service->update($id);
     }
 
     /**
@@ -65,6 +65,6 @@ class AdmPermissionController extends Controller
      */
     public function destroy(string $id)
     {
-        return $this->admPermissionService->delete($id);
+        return $this->service->delete($id);
     }
 }
