@@ -5,7 +5,7 @@ namespace App\Repositories\AdmRepo\Role;
 use App\Models\Role;
 use App\Repositories\BaseRepository;
 
-class RoleRepository extends BaseRepository implements RoleRepositoryInterface
+class AdmRoleRepository extends BaseRepository implements AdmRoleRepositoryInterface
 {
     public function __construct(Role $role)
     {

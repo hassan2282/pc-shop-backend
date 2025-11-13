@@ -3,24 +3,24 @@
 namespace App\Services\AdmServices;
 use App\Http\Requests\Admin\Role\AdmCreateRoleRequest;
 use App\Http\Requests\Admin\Role\AdmUpdateRoleRequest;
-use App\Repositories\AdmRepo\Role\RoleRepositoryInterface;
+use App\Repositories\AdmRepo\Role\AdmRoleRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class AdmRoleService
 {
-    public function __construct(readonly protected RoleRepositoryInterface $roleRepository)
+    public function __construct(readonly protected AdmRoleRepositoryInterface $admRoleRepository)
     {
     }
 
     public function index()
     {
-        $all =  $this->roleRepository->all();
+        $all =  $this->admRoleRepository->all();
         return response()->json(['all' => $all], HttpResponse::HTTP_OK);
     }
 
     public function create(AdmCreateRoleRequest $request)
     {
-        $create = $this->roleRepository->create($request->toArray());
+        $create = $this->admRoleRepository->create($request->toArray());
         if(!!$create){
             return response()->json('نقش با موفقیت افزوده شد ♥', HttpResponse::HTTP_CREATED);
         }else{
@@ -30,7 +30,7 @@ class AdmRoleService
 
     public function show(string $id)
     {
-        $find=  $this->roleRepository->find($id);
+        $find=  $this->admRoleRepository->find($id);
         if ($find){
             return response()->json(['find' => $find], HttpResponse::HTTP_OK);
         }else{
@@ -40,10 +40,10 @@ class AdmRoleService
 
     public function update(AdmUpdateRoleRequest $request, int $id)
     {
-        $find =  $this->roleRepository->find($id);
+        $find =  $this->admRoleRepository->find($id);
         if ($find){
             try {
-                $this->roleRepository->update($id, $request->toArray());
+                $this->admRoleRepository->update($id, $request->toArray());
                 return response()->json(['نقش با موفقیت آپدیت شد ♥'], HttpResponse::HTTP_OK);
             }catch(\Exception $e){
                 return response()->json(['error' => $e->getMessage()], HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
@@ -56,9 +56,9 @@ class AdmRoleService
 
     public function delete(string $id)
     {
-        $find =  $this->roleRepository->find($id);
+        $find =  $this->admRoleRepository->find($id);
         if ($find){
-            $delete = $this->roleRepository->delete($id);
+            $delete = $this->admRoleRepository->delete($id);
             if($delete){
                 return response()->json(['نقش با موفقیت حذف شد ♥'], HttpResponse::HTTP_OK);
             }else{

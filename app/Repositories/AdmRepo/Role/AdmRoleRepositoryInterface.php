@@ -4,7 +4,7 @@ namespace App\Repositories\AdmRepo\Role;
 
 use App\Repositories\EloquentRepositoryInterface;
 
-interface RoleRepositoryInterface extends EloquentRepositoryInterface
+interface AdmRoleRepositoryInterface extends EloquentRepositoryInterface
 {
 
 }

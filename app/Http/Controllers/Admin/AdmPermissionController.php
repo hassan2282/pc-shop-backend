@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Role\AdmCreateRoleRequest;
-use App\Http\Requests\Admin\Role\AdmUpdateRoleRequest;
-use App\Models\Role;
-use App\Services\AdmServices\AdmRoleService;
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\Permission\StorePermissionRequest;
+use App\Http\Requests\Admin\Permission\UpdatePermissionRequest;
+use App\Services\AdmServices\AdmPermissionService;
 
-class RoleController extends Controller
+class AdmPermissionController extends Controller
 {
-
-    public function __construct(readonly protected AdmRoleService $admRoleService)
+    public function __construct(readonly protected AdmPermissionService $admPermissionService)
     {
     }
     /**
@@ -20,7 +17,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return $this->admRoleService->index();
+        return $this->admPermissionService->index();
     }
 
     /**
@@ -34,9 +31,9 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AdmCreateRoleRequest $request)
+    public function store(StorePermissionRequest $request)
     {
-        return $this->admRoleService->create($request);
+        return $this->admPermissionService->create($request);
     }
 
     /**
@@ -44,7 +41,7 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        return $this->admRoleService->show($id);
+        return $this->admPermissionService->show($id);
     }
 
     /**
@@ -58,9 +55,9 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdmUpdateRoleRequest $request, int $id)
+    public function update(UpdatePermissionRequest $request, int $id)
     {
-        return $this->admRoleService->update($request, $id);
+        return $this->admPermissionService->update($request, $id);
     }
 
     /**
@@ -68,6 +65,6 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        return $this->admRoleService->delete($id);
+        return $this->admPermissionService->delete($id);
     }
 }
