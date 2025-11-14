@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Role\AdmCreateRoleRequest;
-use App\Http\Requests\Admin\Role\AdmUpdateRoleRequest;
-use App\Models\Role;
+use App\Http\Requests\Admin\Role\UpdateRoleRequest;
 use App\Services\AdmServices\AdmRoleService;
 use Illuminate\Http\Request;
 
 class AdmRoleController extends Controller
 {
 
-    public function __construct(readonly protected AdmRoleService $admRoleService)
+    public function __construct(readonly protected AdmRoleService $service)
     {
     }
     /**
@@ -20,7 +18,7 @@ class AdmRoleController extends Controller
      */
     public function index()
     {
-        return $this->admRoleService->index();
+        return $this->service->index();
     }
 
     /**
@@ -34,9 +32,9 @@ class AdmRoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AdmCreateRoleRequest $request)
+    public function store()
     {
-        return $this->admRoleService->create($request);
+        return $this->service->store();
     }
 
     /**
@@ -44,7 +42,7 @@ class AdmRoleController extends Controller
      */
     public function show(string $id)
     {
-        return $this->admRoleService->show($id);
+        return $this->service->show($id);
     }
 
     /**
@@ -58,9 +56,9 @@ class AdmRoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdmUpdateRoleRequest $request, int $id)
+    public function update(int $id)
     {
-        return $this->admRoleService->update($request, $id);
+        return $this->service->update($id);
     }
 
     /**
@@ -68,6 +66,6 @@ class AdmRoleController extends Controller
      */
     public function destroy(string $id)
     {
-        return $this->admRoleService->delete($id);
+        return $this->service->delete($id);
     }
 }
