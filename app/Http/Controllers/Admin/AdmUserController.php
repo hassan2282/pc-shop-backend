@@ -3,23 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\User\AdmCreateUserRequest;
-use App\Http\Requests\Admin\User\AdmUpdateUserRequest;
 use App\Services\AdmServices\AdmUserService;
 
 class AdmUserController extends Controller
 {
 
-    public function __construct(readonly protected AdmUserService $admUserService)
+    public function __construct(readonly protected AdmUserService $service)
     {
     }
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return $this->admUserService->index();
+        return $this->service->index();
     }
 
     /**
@@ -33,9 +30,9 @@ class AdmUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AdmCreateUserRequest $request)
+    public function store()
     {
-        return $this->admUserService->create($request);
+        return $this->service->store();
     }
 
     /**
@@ -43,7 +40,7 @@ class AdmUserController extends Controller
      */
     public function show(string $id)
     {
-        return $this->admUserService->show($id);
+        return $this->service->show($id);
     }
 
     /**
@@ -57,9 +54,9 @@ class AdmUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdmUpdateUserRequest $request, int $id)
+    public function update(int $id)
     {
-        return $this->admUserService->update($request, $id);
+        return $this->service->update($id);
     }
 
     /**
@@ -67,6 +64,6 @@ class AdmUserController extends Controller
      */
     public function destroy(string $id)
     {
-        return $this->admUserService->delete($id);
+        return $this->service->delete($id);
     }
 }
