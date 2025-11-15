@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\AdmRepo\Category\AdmCategoryRepository;
+use App\Repositories\AdmRepo\Category\AdmCategoryRepositoryInterface;
 use App\Repositories\AdmRepo\Permission\AdmPermissionRepository;
 use App\Repositories\AdmRepo\Permission\AdmPermissionRepositoryInterface;
 use App\Repositories\AdmRepo\Role\AdmRoleRepository;
@@ -29,6 +31,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AdmUserRepositoryInterface::class, AdmUserRepository::class);
         $this->app->bind(AdmRoleRepositoryInterface::class, AdmRoleRepository::class);
         $this->app->bind(AdmPermissionRepositoryInterface::class, AdmPermissionRepository::class);
+        $this->app->bind(AdmCategoryRepositoryInterface::class, AdmCategoryRepository::class);
     }
 
 }

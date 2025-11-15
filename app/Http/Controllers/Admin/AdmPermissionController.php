@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Permission\StorePermissionRequest;
-use App\Http\Requests\Admin\Permission\UpdatePermissionRequest;
 use App\Services\AdmServices\AdmPermissionService;
 
 class AdmPermissionController extends Controller
