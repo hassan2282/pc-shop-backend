@@ -10,5 +10,10 @@ class Category extends Model
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
 
+    protected $guarded = ['id'];
 
+    public function parent()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
