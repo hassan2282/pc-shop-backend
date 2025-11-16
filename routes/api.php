@@ -43,6 +43,7 @@ Route::group([
     Route::apiResource('roles', \App\Http\Controllers\Admin\AdmRoleController::class);
     Route::apiResource('permissions', \App\Http\Controllers\Admin\AdmPermissionController::class);
     Route::apiResource('categories', \App\Http\Controllers\Admin\AdmCategoryController::class);
+    Route::apiResource('articles', \App\Http\Controllers\Admin\AdmArticleController::class);
 });
 
 // End Admin Panel Routes
