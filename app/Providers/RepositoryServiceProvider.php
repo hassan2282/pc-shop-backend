@@ -8,6 +8,8 @@ use App\Repositories\AdmRepo\Category\AdmCategoryRepository;
 use App\Repositories\AdmRepo\Category\AdmCategoryRepositoryInterface;
 use App\Repositories\AdmRepo\Permission\AdmPermissionRepository;
 use App\Repositories\AdmRepo\Permission\AdmPermissionRepositoryInterface;
+use App\Repositories\AdmRepo\Product\AdmProductRepository;
+use App\Repositories\AdmRepo\Product\AdmProductRepositoryInterface;
 use App\Repositories\AdmRepo\Role\AdmRoleRepository;
 use App\Repositories\AdmRepo\Role\AdmRoleRepositoryInterface;
 use App\Repositories\AdmRepo\User\AdmUserRepository;
@@ -35,6 +37,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AdmPermissionRepositoryInterface::class, AdmPermissionRepository::class);
         $this->app->bind(AdmCategoryRepositoryInterface::class, AdmCategoryRepository::class);
         $this->app->bind(AdmArticleRepositoryInterface::class, AdmArticleRepository::class);
+        $this->app->bind(AdmProductRepositoryInterface::class, AdmProductRepository::class);
     }
 
 }
