@@ -12,6 +12,8 @@ use App\Repositories\AdmRepo\Product\AdmProductRepository;
 use App\Repositories\AdmRepo\Product\AdmProductRepositoryInterface;
 use App\Repositories\AdmRepo\Role\AdmRoleRepository;
 use App\Repositories\AdmRepo\Role\AdmRoleRepositoryInterface;
+use App\Repositories\AdmRepo\Tag\AdmTagRepository;
+use App\Repositories\AdmRepo\Tag\AdmTagRepositoryInterface;
 use App\Repositories\AdmRepo\User\AdmUserRepository;
 use App\Repositories\AdmRepo\User\AdmUserRepositoryInterface;
 use App\Repositories\BaseRepository;
@@ -38,6 +40,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AdmCategoryRepositoryInterface::class, AdmCategoryRepository::class);
         $this->app->bind(AdmArticleRepositoryInterface::class, AdmArticleRepository::class);
         $this->app->bind(AdmProductRepositoryInterface::class, AdmProductRepository::class);
+        $this->app->bind(AdmTagRepositoryInterface::class, AdmTagRepository::class);
     }
 
 }
