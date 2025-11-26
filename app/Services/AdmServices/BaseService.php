@@ -21,7 +21,13 @@ abstract class BaseService
     public function index(): JsonResponse
     {
         $all = $this->repository->all();
-        return response()->json(['data' => $all], HttpResponse::HTTP_OK);
+        return response()->json($all, HttpResponse::HTTP_OK);
+    }
+
+    public function allWithRelation(array $relations)
+    {
+        $allWithRelations = $this->repository->allWithRelation($relations);
+        return response()->json($allWithRelations);
     }
 
     public function store(): JsonResponse
@@ -38,7 +44,6 @@ abstract class BaseService
             $created = $this->repository->create($validated);
             return response()->json([
                 'message' => 'آیتم با موفقیت افزوده شد ♥',
-                'data' => $created,
             ], HttpResponse::HTTP_CREATED);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
@@ -52,7 +57,19 @@ abstract class BaseService
             return response()->json(['message' => 'موردی یافت نشد!'], HttpResponse::HTTP_NOT_FOUND);
         }
 
-        return response()->json(['data' => $item], HttpResponse::HTTP_OK);
+        return response()->json($item, HttpResponse::HTTP_OK);
+    }
+
+    public function changeStatus(int $id): JsonResponse
+    {
+        $item = $this->repository->find($id);
+        if ($item) {
+            $item->status = !$item->status;
+            $item->save();
+            return response()->json(['message' => 'ویرایش با موفقیت انجام گرفت'], HttpResponse::HTTP_OK);
+        }else{
+            return response()->json(['message' => 'موردی یافت نشد!'], HttpResponse::HTTP_NOT_FOUND);
+        }
     }
 
     public function update(int $id): JsonResponse
@@ -69,10 +86,9 @@ abstract class BaseService
         }
 
         try {
-            $updated = $this->repository->update($id, $validated);
+            $this->repository->update($id, $validated);
             return response()->json([
                 'message' => 'آیتم با موفقیت ویرایش شد ♥',
-                'data' => $updated,
             ], HttpResponse::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
