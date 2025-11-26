@@ -25,11 +25,11 @@ class StoreAdmUserRequest extends FormRequest
             'username' => 'required|min:6|max:255|unique:users',
             'first_name' => 'required|min:3|max:255|string',
             'last_name' => 'required|min:3|max:255|string',
-            'phone' => 'nullable|unique:users|digits:11|regex:/^[0][9][0-9]{9,9}$/',
+            'phone' => 'required|unique:users|digits:11|regex:/^[0][9][0-9]{9,9}$/',
             'email' => 'nullable|unique:users|max:255|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i',
             'password' => 'required|min:6|max:255|confirmed',
             'password_confirmation' => 'required',
-//            'role_id' => 'required|exists:roles',
+            'role_id' => 'required|exists:roles,id',
         ];
     }
 
