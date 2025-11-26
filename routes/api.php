@@ -40,6 +40,7 @@ Route::group([
 ], function ()
 {
     Route::apiResource('users', \App\Http\Controllers\Admin\AdmUserController::class);
+    Route::post('users/changeStatus/{id}', [\App\Http\Controllers\Admin\AdmUserController::class, 'changeStatus']);
     Route::apiResource('roles', \App\Http\Controllers\Admin\AdmRoleController::class);
     Route::apiResource('permissions', \App\Http\Controllers\Admin\AdmPermissionController::class);
     Route::apiResource('categories', \App\Http\Controllers\Admin\AdmCategoryController::class);
