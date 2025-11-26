@@ -16,7 +16,7 @@ class AdmUserController extends Controller
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->allWithRelation(['role','media']);
     }
 
     /**
@@ -41,6 +41,11 @@ class AdmUserController extends Controller
     public function show(string $id)
     {
         return $this->service->show($id);
+    }
+
+    public function changeStatus(int $id)
+    {
+        return $this->service->changeStatus($id);
     }
 
     /**
