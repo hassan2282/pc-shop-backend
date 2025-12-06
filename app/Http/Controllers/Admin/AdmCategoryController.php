@@ -15,7 +15,7 @@ class AdmCategoryController extends Controller
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->allWithRelation(['parent']);
     }
 
     /**
