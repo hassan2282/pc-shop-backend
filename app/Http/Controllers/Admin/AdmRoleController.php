@@ -32,9 +32,9 @@ class AdmRoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(Request $request)
     {
-        return $this->service->store();
+        return $this->service->storeWithPivot($request);
     }
 
     /**
