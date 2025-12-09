@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,10 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::factory()->count(20)->create();
+        $permissions = Permission::all();
+        Role::factory()->count(20)->create()->each(function($role) use ($permissions){
+            $randomPermissions = $permissions->random(rand(1,7))->pluck('id');
+            $role->permissions()->attach($randomPermissions);
+        });
     }
 }
