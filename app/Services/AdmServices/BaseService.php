@@ -60,6 +60,16 @@ abstract class BaseService
         return response()->json($item, HttpResponse::HTTP_OK);
     }
 
+    public function findWithRelation(int $id): JsonResponse
+    {
+        $item = $this->repository->findWithRelation($id, ['permissions']);
+        if (!$item) {
+            return response()->json(['message' => 'موردی یافت نشد!'], HttpResponse::HTTP_NOT_FOUND);
+        }
+
+        return response()->json($item, HttpResponse::HTTP_OK);
+    }
+
     public function changeStatus(int $id): JsonResponse
     {
         $item = $this->repository->find($id);
