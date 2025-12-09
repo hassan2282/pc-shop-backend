@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Role\UpdateRoleRequest;
 use App\Services\AdmServices\AdmRoleService;
 use Illuminate\Http\Request;
 
@@ -40,9 +39,9 @@ class AdmRoleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        return $this->service->show($id);
+        return $this->service->findWithRelation($id);
     }
 
     /**
@@ -56,9 +55,9 @@ class AdmRoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(int $id)
+    public function update(int $id, Request $request)
     {
-        return $this->service->update($id);
+        return $this->service->updateٌWithRelation($id, $request);
     }
 
     /**
