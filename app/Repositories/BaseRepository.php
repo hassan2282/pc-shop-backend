@@ -31,7 +31,7 @@ class BaseRepository implements EloquentRepositoryInterface
 
     public function findWithRelation(int $id, array $relations)
     {
-        return $this->model->find($id)->with($relations)->get();
+        return $this->find($id)?->load($relations);
     }
 
     public function find(int $id): ?Model
