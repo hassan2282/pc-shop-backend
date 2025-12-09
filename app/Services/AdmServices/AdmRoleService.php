@@ -49,5 +49,20 @@ class AdmRoleService extends BaseService
             return response()->json($e->getMessage(), HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function updateٌWithRelation(int $id, Request $request)
+    {
+        try{
+            $role = Role::findOrFail($id);
+            $role->update([$request->name]);
+            $role->save();
+            $permsUP =  $role->permissions()->sync($request->permissions);
+            if($role && $permsUP){
+                return response()->json('نقش با موفقیت ویرایش شد', HttpResponse::HTTP_OK);
+            }
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(), HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
     
 }
