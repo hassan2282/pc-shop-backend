@@ -18,7 +18,7 @@ class AdmRoleController extends Controller
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->allWithRelation(['permissions']);
     }
 
     /**
@@ -66,6 +66,6 @@ class AdmRoleController extends Controller
      */
     public function destroy(string $id)
     {
-        return $this->service->delete($id);
+        return $this->service->deleteWithRelations($id);
     }
 }
