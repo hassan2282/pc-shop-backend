@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('status')->default(1);
             $table->foreignId('role_id')->default(1)->comment('1 => کاربر معمولی')->constrained('roles');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
 
