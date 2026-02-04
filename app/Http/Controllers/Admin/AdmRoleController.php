@@ -41,7 +41,7 @@ class AdmRoleController extends Controller
      */
     public function show(int $id)
     {
-        return $this->service->findWithRelation($id);
+        return $this->service->findWithRelation($id, ['permissions']);
     }
 
     /**
