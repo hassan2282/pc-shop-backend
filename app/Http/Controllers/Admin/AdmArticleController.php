@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Article\StoreArticleRequest;
 use App\Services\AdmServices\AdmArticleService;
-use Illuminate\Http\Request;
 
 class AdmArticleController extends Controller
 {
@@ -30,9 +30,9 @@ class AdmArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(StoreArticleRequest $request)
     {
-        return $this->service->store();
+        return $this->service->createArticle($request);
     }
 
     /**
@@ -67,9 +67,4 @@ class AdmArticleController extends Controller
         return $this->service->delete($id);
     }
 
-
-    public function editor(Request $request)
-    {
-        return $this->service->editor($request);
-    }
 }
