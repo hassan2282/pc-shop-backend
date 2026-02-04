@@ -24,10 +24,11 @@ class StoreArticleRequest extends FormRequest
         return [
             'title' => 'required|string|min:5|max:150',
             'description' => 'required|string|min:20|max:500',
-            'text' => 'required|string|min:100|max:10000',
+            'text' => 'required',
             'author_id' => 'required|exists:users,id',
             'category_id' => 'required|exists:categories,id',
-            'media' => 'required|file|mimes:jpeg,png,jpg,svg,mp4,mov,avi|max:10240',
+            'media' => 'required|mimes:jpeg,png,jpg,svg|max:10240',
+            'tags' => 'required|array',
         ];
     }
 
@@ -44,11 +45,13 @@ class StoreArticleRequest extends FormRequest
             'description.required' => 'توضیحات الزامی است.',
             'description.min' => 'توضیحات باید حداقل ۵۰ کاراکتر باشد.',
             'text.required' => 'متن مقاله الزامی است.',
-            'text.min' => 'متن باید حداقل ۱۰۰ کاراکتر باشد.',
+            // 'text.min' => 'متن باید حداقل 50 کاراکتر باشد.',
             'author_id.required' => 'شناسه نویسنده الزامی است.',
             'category_id.required' => 'شناسه دسته‌بندی الزامی است.',
             'media.required' => 'فایل رسانه‌ای الزامی است.',
             'media.mimes' => 'فایل رسانه‌ای باید از نوع jpeg، png، jpg، svg، mp4، mov، یا avi باشد.',
+            'tags.required' => 'تگ الزامی است',
+            'tags.array' => 'فرمت ارسال تگ صحیح نیست',
         ];
     }
 
