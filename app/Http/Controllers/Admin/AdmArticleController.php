@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\AdmServices\AdmArticleService;
+use Illuminate\Http\Request;
 
 class AdmArticleController extends Controller
 {
@@ -64,5 +65,11 @@ class AdmArticleController extends Controller
     public function destroy(string $id)
     {
         return $this->service->delete($id);
+    }
+
+
+    public function editor(Request $request)
+    {
+        return $this->service->editor($request);
     }
 }

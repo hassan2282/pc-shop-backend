@@ -46,6 +46,8 @@ Route::group([
     Route::apiResource('categories', \App\Http\Controllers\Admin\AdmCategoryController::class);
     Route::apiResource('articles', \App\Http\Controllers\Admin\AdmArticleController::class);
     Route::apiResource('products', \App\Http\Controllers\Admin\AdmProductController::class);
+
+    Route::post('/articles/editor', [\App\Http\Controllers\Admin\AdmArticleController::class, 'editor']);
 });
 
 // End Admin Panel Routes
