@@ -22,7 +22,7 @@ class StoreTagRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' =>  'required|string|min:3|max:255'
+            'name' =>  'required|unique:tags|string|min:3|max:255'
         ];
     }
 
@@ -32,6 +32,7 @@ class StoreTagRequest extends FormRequest
             'name.required' => 'نام تگ الزامی است',
             'name.min' => 'حداقل تعداد کاراکتر 3 کاراکتر است',
             'name.max' => 'حداکثر تعداد کاراکتر 255 کاراکتر است',
+            'name.unique' => 'این تگ قبلا ثبت شده',
         ];
     }
 }
