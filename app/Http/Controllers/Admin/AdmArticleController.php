@@ -16,7 +16,7 @@ class AdmArticleController extends Controller
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->articlesWithRelation();
     }
 
     /**
@@ -40,7 +40,7 @@ class AdmArticleController extends Controller
      */
     public function show(string $id)
     {
-        return $this->service->show($id);
+        return $this->service->showWithRelation($id);
     }
 
     /**
@@ -62,9 +62,9 @@ class AdmArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        return $this->service->delete($id);
+        return $this->service->deleteWithRelations($id);
     }
 
 }
