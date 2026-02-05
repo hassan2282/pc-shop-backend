@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -13,6 +14,19 @@ class Category extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    
+    protected static function booted()
+    {
+        static::creating(function ($category) {
+            $slug = Str::slug($category->name);
+            $count = Category::where('slug', 'like', "{$slug}%")->count();
+
+            $category->slug = $count ? "{$slug}-{$count}" : $slug;
+        });
+    }
+
+
 
     public function parent(): BelongsTo
     {
