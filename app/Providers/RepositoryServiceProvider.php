@@ -16,10 +16,16 @@ use App\Repositories\AdmRepo\Tag\AdmTagRepository;
 use App\Repositories\AdmRepo\Tag\AdmTagRepositoryInterface;
 use App\Repositories\AdmRepo\User\AdmUserRepository;
 use App\Repositories\AdmRepo\User\AdmUserRepositoryInterface;
+use App\Repositories\AdmRepo\Ticket\AdmTicketRepository;
+use App\Repositories\AdmRepo\Ticket\AdmTicketRepositoryInterface;
 use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepositoryInterface;
 use App\Repositories\Address\AddressRepository;
 use App\Repositories\Address\AddressRepositoryInterface;
+use App\Repositories\AdmRepo\Conversation\AdmConversationRepository;
+use App\Repositories\AdmRepo\Conversation\AdmConversationRepositoryInterface;
+use App\Repositories\AdmRepo\EditorMedia\AdmEditorMediaRepository;
+use App\Repositories\AdmRepo\EditorMedia\AdmEditorMediaRepositoryInterface;
 use App\Repositories\Media\MediaRepository;
 use App\Repositories\Media\MediaRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -41,6 +47,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AdmArticleRepositoryInterface::class, AdmArticleRepository::class);
         $this->app->bind(AdmProductRepositoryInterface::class, AdmProductRepository::class);
         $this->app->bind(AdmTagRepositoryInterface::class, AdmTagRepository::class);
+        $this->app->bind(AdmTicketRepositoryInterface::class, AdmTicketRepository::class);
+        $this->app->bind(AdmConversationRepositoryInterface::class, AdmConversationRepository::class);
+        $this->app->bind(AdmEditorMediaRepositoryInterface::class, AdmEditorMediaRepository::class);
     }
 
 }
