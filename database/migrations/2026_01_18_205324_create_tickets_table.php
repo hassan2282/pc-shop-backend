@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
-            $table->softDeletes();
+            $table->text('text');
+            $table->foreignId('conversation_id')->constrained('conversations');
+            $table->foreignId('admin_id')->nullable()->constrained('users', 'id');
+            $table->boolean('status')->default(0)->comment('0 => pending , 1 => checked');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('tickets');
     }
 };

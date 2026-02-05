@@ -2,17 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Tag;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Conversation;
 use Illuminate\Database\Seeder;
 
-class TagSeeder extends Seeder
+class ConversationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Tag::factory()->count(25)->create();
+        Conversation::factory()->count(20)->create();
     }
 }

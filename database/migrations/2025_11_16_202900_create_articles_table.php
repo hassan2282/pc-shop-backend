@@ -16,7 +16,8 @@ return new class extends Migration
             $table->text('title');
             $table->text('description');
             $table->longText('text');
-            $table->integer('views');
+            $table->integer('views')->default(0);
+            $table->string('slug')->unique();
             $table->boolean('status')->default(1)->comment('0 => not published, 1 => published');
             $table->foreignId('author_id')->constrained('users');
             $table->foreignId('category_id')->constrained('categories');

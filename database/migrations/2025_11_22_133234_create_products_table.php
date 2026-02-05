@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->text('description');
             $table->longText('text');
+            $table->string('slug')->unique();
             $table->boolean('status')->default(1);
             $table->foreignId('category_id')->constrained('categories');
             $table->timestamps();

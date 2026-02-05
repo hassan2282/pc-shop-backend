@@ -3,6 +3,7 @@
 namespace App\Services\AdmServices;
 
 use Illuminate\Http\JsonResponse;
+use Pest\Support\Arr;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 abstract class BaseService
@@ -60,9 +61,9 @@ abstract class BaseService
         return response()->json($item, HttpResponse::HTTP_OK);
     }
 
-    public function findWithRelation(int $id): JsonResponse
+    public function findWithRelation(int $id, array $array): JsonResponse
     {
-        $item = $this->repository->findWithRelation($id, ['permissions']);
+        $item = $this->repository->findWithRelation($id, $array);
         if (!$item) {
             return response()->json(['message' => 'موردی یافت نشد!'], HttpResponse::HTTP_NOT_FOUND);
         }

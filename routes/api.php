@@ -31,7 +31,6 @@ Route::group([
     Route::delete('delete-address/{id}', [AddressController::class, 'delete']);
 });
 
-
 // Start Admin Panel Routes
 
 Route::group([
@@ -46,8 +45,12 @@ Route::group([
     Route::apiResource('categories', \App\Http\Controllers\Admin\AdmCategoryController::class);
     Route::apiResource('articles', \App\Http\Controllers\Admin\AdmArticleController::class);
     Route::apiResource('products', \App\Http\Controllers\Admin\AdmProductController::class);
+    Route::apiResource('tickets', \App\Http\Controllers\Admin\AdmTicketController::class);
+    Route::apiResource('conversations', \App\Http\Controllers\Admin\AdmConversationController::class);
+    Route::apiResource('tags', \App\Http\Controllers\Admin\AdmTagController::class);
 
-    Route::post('/articles/editor', [\App\Http\Controllers\Admin\AdmArticleController::class, 'editor']);
+    Route::post('/articles/editor', [\App\Http\Controllers\Admin\AdmEditorMediaController::class, 'store']);
+    Route::delete('/articles/delete-image/{id}', [\App\Http\Controllers\Admin\AdmEditorMediaController::class, 'destroy']);
 });
 
 // End Admin Panel Routes

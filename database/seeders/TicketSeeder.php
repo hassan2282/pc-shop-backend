@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Tag;
+use App\Models\Ticket;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TagSeeder extends Seeder
+class TicketSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Tag::factory()->count(25)->create();
+        Ticket::factory()->count(100)->create();
     }
 }

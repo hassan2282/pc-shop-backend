@@ -17,8 +17,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-//            'name' => fake()->word,
-//            'parent_id' => fake()->boolean(30) ? null : fake()->numberBetween(1,100),
+           'name' => fake()->word,
+           'parent_id' =>  null,
         ];
     }
 }
