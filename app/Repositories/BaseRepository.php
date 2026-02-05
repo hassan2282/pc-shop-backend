@@ -16,7 +16,7 @@ class BaseRepository implements EloquentRepositoryInterface
 
     public function all(): Collection
     {
-        return $this->model->all();
+        return $this->model->orderBy('id','DESC')->get();
     }
 
     public function allWithPaginate($paginate = 30, $type = 'DESC')
@@ -26,7 +26,7 @@ class BaseRepository implements EloquentRepositoryInterface
 
     public function allWithRelation(array $relations)
     {
-        return $this->model->with($relations)->get();
+        return $this->model->with($relations)->orderBy('id','DESC')->get();
     }
 
     public function findWithRelation(int $id, array $relations)
