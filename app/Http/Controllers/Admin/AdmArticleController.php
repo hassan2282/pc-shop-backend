@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Article\StoreArticleRequest;
+use App\Http\Requests\Admin\Article\UpdateArticleRequest;
+use App\Models\Article;
 use App\Services\AdmServices\AdmArticleService;
 
 class AdmArticleController extends Controller
@@ -54,9 +56,9 @@ class AdmArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(int $id)
+    public function update(int $id, UpdateArticleRequest $request)
     {
-        return $this->service->update($id);
+        return $this->service->updateWithRelation($id,$request);
     }
 
     /**
