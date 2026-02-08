@@ -24,10 +24,10 @@ class UpdateArticleRequest extends FormRequest
         return [
             'title' => 'nullable|string|min:5|max:150',
             'description' => 'nullable|string|min:20|max:500',
-            'text' => 'nullable|string|min:100|max:10000',
-            'author_id' => 'nullable|exists:users,id',
+            'text' => 'nullable|string|min:20|max:10000',
             'category_id' => 'nullable|exists:categories,id',
             'media' => 'nullable|file|mimes:jpeg,png,jpg,svg,mp4,mov,avi|max:10240',
+            'tags' => 'nullable|array',
         ];
     }
 
@@ -43,6 +43,7 @@ class UpdateArticleRequest extends FormRequest
             'description.min' => 'توضیحات باید حداقل ۵۰ کاراکتر باشد.',
             'text.min' => 'متن باید حداقل ۱۰۰ کاراکتر باشد.',
             'media.mimes' => 'فایل رسانه‌ای باید از نوع jpeg، png، jpg، svg، mp4، mov، یا avi باشد.',
+            'tags.array' => 'فرمت ارسالی تگ ها صحیح نیست',
         ];
     }
 
