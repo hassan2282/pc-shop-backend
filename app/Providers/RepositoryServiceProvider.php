@@ -26,6 +26,8 @@ use App\Repositories\AdmRepo\Conversation\AdmConversationRepository;
 use App\Repositories\AdmRepo\Conversation\AdmConversationRepositoryInterface;
 use App\Repositories\AdmRepo\EditorMedia\AdmEditorMediaRepository;
 use App\Repositories\AdmRepo\EditorMedia\AdmEditorMediaRepositoryInterface;
+use App\Repositories\AdmRepo\Gate\AdmGateRepository;
+use App\Repositories\AdmRepo\Gate\AdmGateRepositoryInterface;
 use App\Repositories\Media\MediaRepository;
 use App\Repositories\Media\MediaRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -50,6 +52,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AdmTicketRepositoryInterface::class, AdmTicketRepository::class);
         $this->app->bind(AdmConversationRepositoryInterface::class, AdmConversationRepository::class);
         $this->app->bind(AdmEditorMediaRepositoryInterface::class, AdmEditorMediaRepository::class);
+        $this->app->bind(AdmGateRepositoryInterface::class, AdmGateRepository::class);
     }
 
 }
