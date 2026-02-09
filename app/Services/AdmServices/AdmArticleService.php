@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\Article\StoreArticleRequest;
 use App\Http\Requests\Admin\Article\UpdateArticleRequest;
 use App\Http\Resources\AdmArticleResource;
 use App\Models\Article;
+use App\Models\Tag;
 use App\Repositories\AdmRepo\Article\AdmArticleRepositoryInterface;
 use App\Repositories\AdmRepo\Tag\AdmTagRepositoryInterface;
 use App\Repositories\Media\MediaRepositoryInterface;
@@ -109,20 +110,81 @@ class AdmArticleService extends BaseService
 
 
 
+    public function updateWithRelation(int $id, UpdateArticleRequest $request)
+    {
+
+        try {
+
+            $article = $this->repository->find($id);
+            $articleData = [
+                'title' => $request->title,
+                'description' => $request->description,
+                'text' => $request->text,
+                'category_id' => $request->category_id,
+            ];
+            $article->update($articleData);
+
+            if ($request->hasFile('media')) {
+                $image = $article->media;
+                Storage::disk('public')->delete('/media/' . $image->name);
+                $image->delete();
+
+                $image = $request->file('media');
+                $image_name = time() . '-' . Str::random(20) . '.' . $image->getClientOriginalExtension();
+                $path = $image->storeAs('media', $image_name, 'public');
+                $absolutePath = Storage::disk('public')->path($path);
+                ImageOptimizerService::optimize($absolutePath);
+                $media = [
+                    'name' => $image_name,
+                    'mimeType' => $image->getMimeType(),
+                    'size' => $image->getSize(),
+                    'mediable_type' => Article::class,
+                    'mediable_id' => $article->id,
+                    'alt' => 'Article Image'
+                ];
+                $mediaRes = $this->mediaRepository->create($media);
+            }
+
+
+            $oldTagIds = $article->tags()->pluck('tags.id')->toArray();
+
+            $article->tags()->detach();
+
+            $newTagIds = [];
+            foreach ($request->tags as $tagName) {
+                $tag = Tag::firstOrCreate([
+                    'name' => $tagName,
+                ]);
+                $newTagIds[] = $tag->id;
+            }
+
+            $article->tags()->sync($newTagIds);
+
+            Tag::whereIn('id', $oldTagIds)
+                ->whereDoesntHave('articles')
+                ->delete();
+
+            return response()->json('مقاله با موفقیت ویرایش شد', HttpResponse::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
 
     public function deleteWithRelations(int $id)
     {
         try {
             $article = $this->repository->find($id);
             $image = $article->media;
-            
+
             foreach ($article->tags as $tag) {
                 $tag->delete();
             }
             Storage::disk('public')->delete('/media/' . $image->name);
             $image->delete();
             $article->delete();
-
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
         }

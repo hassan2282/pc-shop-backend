@@ -34,10 +34,12 @@ Route::group([
 // Start Admin Panel Routes
 
 Route::group([
-    'middleware' => 'api',
+    'middleware' => ['api', 'admin'],
     'prefix' => 'admin'
 ], function ()
 {
+    Route::apiResource('admGate', \App\Http\Controllers\Admin\AdmGateController::class);
+    Route::post('gateGuard', [\App\Http\Controllers\Admin\AdmGateController::class, 'gateGuard']);
     Route::apiResource('users', \App\Http\Controllers\Admin\AdmUserController::class);
     Route::post('users/changeStatus/{id}', [\App\Http\Controllers\Admin\AdmUserController::class, 'changeStatus']);
     Route::apiResource('roles', \App\Http\Controllers\Admin\AdmRoleController::class);
@@ -48,7 +50,6 @@ Route::group([
     Route::apiResource('tickets', \App\Http\Controllers\Admin\AdmTicketController::class);
     Route::apiResource('conversations', \App\Http\Controllers\Admin\AdmConversationController::class);
     Route::apiResource('tags', \App\Http\Controllers\Admin\AdmTagController::class);
-
     Route::post('/articles/editor', [\App\Http\Controllers\Admin\AdmEditorMediaController::class, 'store']);
     Route::delete('/articles/delete-image/{id}', [\App\Http\Controllers\Admin\AdmEditorMediaController::class, 'destroy']);
 });

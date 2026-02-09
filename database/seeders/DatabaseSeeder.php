@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Gate;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
 
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ConversationSeeder::class,
             TicketSeeder::class,
             TagSeeder::class,
+            GateSeeder::class,
         ]);
     }
 }
