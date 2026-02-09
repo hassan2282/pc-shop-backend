@@ -80,12 +80,13 @@ class AdmArticleService extends BaseService
             $tags = $request->tags;
             foreach ($tags as $tag) {
                 $find = $this->tagRepository->where('name', $tag)->first();
-                if (! !!$find) {
+                if (!$find) {
                     $tagRes = $this->tagRepository->create([
                         'name' => $tag,
                     ]);
-
                     $articleRes->tags()->syncWithoutDetaching($tagRes->id);
+                } else {
+                    $articleRes->tags()->syncWithoutDetaching($find->id);
                 }
             }
             // Edn Tag
