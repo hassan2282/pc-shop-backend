@@ -27,6 +27,7 @@ class AdmGateService extends BaseService
             $result = Hash::check($request->gkey, $realKey->gkey);
             if($result === true){
                 return response()->json(true, 200);
+                session(['admin_gate' => true]);
             }else{
                 return response()->json(false, 200);
             }
