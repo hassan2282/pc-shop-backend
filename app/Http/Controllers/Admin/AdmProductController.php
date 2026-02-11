@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Product\StoreProductRequest;
 use App\Services\AdmServices\AdmProductService;
 
 class AdmProductController extends Controller
@@ -31,9 +32,9 @@ class AdmProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(StoreProductRequest $request)
     {
-        return $this->service->store();
+        return $this->service->storeProduct($request);
     }
 
     /**
