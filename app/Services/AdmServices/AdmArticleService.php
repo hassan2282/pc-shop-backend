@@ -28,9 +28,6 @@ class AdmArticleService extends BaseService
     }
 
 
-
-
-
     public function articlesWithRelation()
     {
         $collection = $this->repository->articlesWithRelation();
@@ -38,8 +35,6 @@ class AdmArticleService extends BaseService
 
         return response()->json($data, HttpResponse::HTTP_OK);
     }
-
-
 
 
     public function createArticle(StoreArticleRequest $request)
