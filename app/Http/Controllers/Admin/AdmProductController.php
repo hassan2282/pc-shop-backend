@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\StoreProductRequest;
+use App\Models\Product;
 use App\Services\AdmServices\AdmProductService;
 
 class AdmProductController extends Controller
@@ -18,7 +19,7 @@ class AdmProductController extends Controller
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->productWithRels();
     }
 
     /**
@@ -40,9 +41,9 @@ class AdmProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        return $this->service->show($id);
+        return $this->service->showWithRelations($product);
     }
 
     /**
@@ -64,8 +65,8 @@ class AdmProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        return $this->service->delete($id);
+        return $this->service->deleteWithRelations($product);
     }
 }
