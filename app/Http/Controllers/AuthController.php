@@ -26,33 +26,38 @@ class AuthController extends Controller
 
     public function register()
     {
-        // اعتبارسنجی داده‌های ورودی
-        $validator = Validator::make(request()->all(), [
-            'username' => 'required|unique:users|string|max:255|min:6',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        try{
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            // اعتبارسنجی داده‌های ورودی
+            $validator = Validator::make(request()->all(), [
+                'username' => 'required|unique:users|string|max:255|min:6',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+    
+            // ایجاد کاربر جدید
+            $user = User::create([
+                'username' => request('username'),
+                'email' => request('email'),
+                'password' => bcrypt(request('password')),
+            ]);
+            !$user && throw new \Error('کاربر ساخته نشد');
+            // تولید توکن دسترسی برای کاربر
+            $token = auth()->login($user);
+    
+            $authUser = auth()->user();
+            $userResource =  userApiResource::make($authUser);
+            return response()->json([
+                'user' => $userResource,
+                'authorisation' => $this->respondWithToken($token)
+            ])->cookie('jwt_token', $token, 10080, '/', null, true, true, 'None');
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(), ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        // ایجاد کاربر جدید
-        $user = User::create([
-            'username' => request('username'),
-            'email' => request('email'),
-            'password' => bcrypt(request('password')),
-        ]);
-        ! !!$user && throw new \Error('کاربر ساخته نشد');
-        // تولید توکن دسترسی برای کاربر
-        $token = auth()->login($user);
-
-        $authUser = \auth()->user();
-        $userResource =  userApiResource::make($authUser);
-        return response()->json([
-            'user' => $userResource,
-            'authorisation' => $this->respondWithToken($token)
-        ])->cookie('jwt_token', $token, 60, '/', null, true, true, 'None');
     }
 
 
@@ -78,7 +83,7 @@ class AuthController extends Controller
         return response()->json([
             'user' => $authUser,
             'authorisation' => $this->respondWithToken($token)
-        ])->cookie('jwt_token', $token, 60, '/', null, true, true, 'None');
+        ])->cookie('jwt_token', $token, 10080, '/', null, true, true, 'None');
     }
 
     public function update(AuthUpdateProfileRequest $request, $id)
@@ -169,7 +174,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 10080
         ]);
     }
 }
