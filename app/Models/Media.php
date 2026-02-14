@@ -4,15 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Media extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function mediable(): MorphTo
+    public function media()
     {
-        return $this->morphTo();
+        return $this->morphTo(Media::class, 'mediable');
     }
 }
