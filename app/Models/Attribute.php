@@ -4,9 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Attribute extends Model
 {
     /** @use HasFactory<\Database\Factories\AttributeFactory> */
     use HasFactory;
+    protected $guarded = ['id'];
+
+    public function attribute_values(): HasMany
+    {
+        return $this->hasMany(Attribute_value::class);
+    }
 }
