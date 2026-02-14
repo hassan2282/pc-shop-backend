@@ -44,7 +44,7 @@ class StoreProductRequest extends FormRequest
             'description.required' => 'توضیحات الزامی است.',
             'description.min' => 'توضیحات باید حداقل 20 کاراکتر باشد.',
             'text.required' => 'متن مقاله الزامی است.',
-            'text.min' => 'متن باید حداقل ۱۰۰ کاراکتر باشد.',
+            'text.min' => 'متن باید حداقل 20 کاراکتر باشد.',
             'category_id.required' => 'شناسه دسته‌بندی الزامی است.',
             'media_1.required' => 'فایل رسانه‌ای الزامی است.',
             'tags.required' => 'تگ الزامی است',
