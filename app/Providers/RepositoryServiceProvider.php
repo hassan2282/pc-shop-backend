@@ -22,6 +22,10 @@ use App\Repositories\BaseRepository;
 use App\Repositories\EloquentRepositoryInterface;
 use App\Repositories\Address\AddressRepository;
 use App\Repositories\Address\AddressRepositoryInterface;
+use App\Repositories\AdmRepo\Attribute\AdmAttributeRepository;
+use App\Repositories\AdmRepo\Attribute\AdmAttributeRepositoryInterface;
+use App\Repositories\AdmRepo\Attribute_value\AdmAttribute_valueRepository;
+use App\Repositories\AdmRepo\Attribute_value\AdmAttribute_valueRepositoryInterface;
 use App\Repositories\AdmRepo\Conversation\AdmConversationRepository;
 use App\Repositories\AdmRepo\Conversation\AdmConversationRepositoryInterface;
 use App\Repositories\AdmRepo\EditorMedia\AdmEditorMediaRepository;
@@ -53,6 +57,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AdmConversationRepositoryInterface::class, AdmConversationRepository::class);
         $this->app->bind(AdmEditorMediaRepositoryInterface::class, AdmEditorMediaRepository::class);
         $this->app->bind(AdmGateRepositoryInterface::class, AdmGateRepository::class);
+        $this->app->bind(AdmAttributeRepositoryInterface::class, AdmAttributeRepository::class);
+        $this->app->bind(AdmAttribute_valueRepositoryInterface::class, AdmAttribute_valueRepository::class);
     }
 
 }
