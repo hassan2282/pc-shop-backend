@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\StoreProductRequest;
+use App\Http\Requests\Admin\Product\UpdateProductRequest;
 use App\Models\Product;
 use App\Services\AdmServices\AdmProductService;
 
@@ -57,9 +58,9 @@ class AdmProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(int $id)
+    public function update(Product $product, UpdateProductRequest $request)
     {
-        return $this->service->update($id);
+        return $this->service->updateProduct($product, $request);
     }
 
     /**
