@@ -22,11 +22,11 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:150|min:5',
+            'title' => 'required|string|min:5',
             'price' => 'required|numeric',
             'amount' => 'required|numeric',
-            'description' => 'required|string|min:20|max:500',
-            'text' => 'required|string|min:10|max:10000',
+            'description' => 'required|string|min:20',
+            'text' => 'required|string|min:10',
             'category_id' => 'required|exists:categories,id',
             'media_1' => 'required|file|mimes:jpeg,png,jpg,svg|max:10240',
             'tags' => 'required|array',
