@@ -22,12 +22,12 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'nullable|string|max:150|min:5',
+            'title' => 'nullable|string|min:5',
             'amount' => 'nullable|numeric',
-            'description' => 'nullable|string|min:20|max:500',
-            'text' => 'nullable|string|min:100|max:10000',
-            'category_id' => 'nullable|exists:categories',
-            'media' => 'nullable|file|jpeg,png,jpg,svg,mp4,mov,avi|max:10240',
+            'description' => 'nullable|string|min:20',
+            'text' => 'nullable|string|min:20',
+            'category_id' => 'nullable',
+            'media' => 'nullable|file|jpeg,png,jpg,svg|max:10240',
         ];
     }
 
@@ -37,7 +37,7 @@ class UpdateProductRequest extends FormRequest
             'title.string' => 'نوع عنوان اشتباه است',
             'title.min' => 'عنوان باید حداقل 5 کاراکتر باشد.',
             'description.min' => 'توضیحات باید حداقل 20 کاراکتر باشد.',
-            'text.min' => 'متن باید حداقل ۱۰۰ کاراکتر باشد.',
+            'text.min' => 'متن باید حداقل 20 کاراکتر باشد.',
             'media.mimes' => 'فایل رسانه‌ای باید از نوع jpeg، png، jpg، svg، mp4، mov، یا avi باشد.',
         ];
     }
