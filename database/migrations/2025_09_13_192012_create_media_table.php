@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id();
-            $table->morphs('mediable');
             $table->string('name');
             $table->integer('size');
             $table->string('mimeType',100);
+            $table->morphs('mediable');
             $table->string('alt')->nullable();
             $table->string('slug')->nullable();
             $table->timestamps();
