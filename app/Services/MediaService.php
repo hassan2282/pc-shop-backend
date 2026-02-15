@@ -29,7 +29,7 @@ class MediaService
 
         if($user->media?->first()){
             $storageDelete =  Storage::disk('public')->delete('/media/'. $user->media->first()->name);
-            !$storageDelete && throw new \Exception('متاسفانه فایل پروفایل قبلی از دیتابیس حذف نشد!!!');;
+            !$storageDelete && throw new \Exception('متاسفانه فایل پروفایل قبلی از دیتابیس حذف نشد!!!');
             $deleteRes =  $this->mediaRepository->delete($user->media->first()->id);
             !$deleteRes && throw new \Exception('متاسفانه اطلاعات پروفایل قبلی از دیتابیس حذف نشد!!!');
         }
