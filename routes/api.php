@@ -47,6 +47,7 @@ Route::group([
     Route::apiResource('categories', \App\Http\Controllers\Admin\AdmCategoryController::class);
     Route::apiResource('articles', \App\Http\Controllers\Admin\AdmArticleController::class);
     Route::apiResource('products', \App\Http\Controllers\Admin\AdmProductController::class);
+    Route::get('productsForHome', [\App\Http\Controllers\Admin\AdmProductController::class, 'productsForHome']);
     Route::apiResource('tickets', \App\Http\Controllers\Admin\AdmTicketController::class);
     Route::apiResource('conversations', \App\Http\Controllers\Admin\AdmConversationController::class);
     Route::apiResource('tags', \App\Http\Controllers\Admin\AdmTagController::class);
