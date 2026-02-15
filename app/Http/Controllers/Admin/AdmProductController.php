@@ -23,6 +23,11 @@ class AdmProductController extends Controller
         return $this->service->productWithRels();
     }
 
+    public function productsForHome()
+    {
+        return $this->service->productsForHome();
+    }
+
     /**
      * Show the form for creating a new resource.
      */
