@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Article\StoreArticleRequest;
 use App\Http\Requests\Admin\Article\UpdateArticleRequest;
-use App\Models\Article;
 use App\Services\AdmServices\AdmArticleService;
 
 class AdmArticleController extends Controller
@@ -44,6 +43,7 @@ class AdmArticleController extends Controller
     {
         return $this->service->showWithRelation($id);
     }
+
 
     /**
      * Show the form for editing the specified resource.
