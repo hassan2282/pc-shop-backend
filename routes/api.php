@@ -7,6 +7,13 @@ use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::group([], function () {
+    Route::get('productsForHome', [\App\Http\Controllers\ProductController::class, 'productsForHome']);
+    Route::get('singleProduct/{id}', [\App\Http\Controllers\ProductController::class, 'singleProduct']);
+    Route::get('blogShow', [\App\Http\Controllers\ArticleController::class, 'blogShow']);
+    Route::get('singleBlog/{id}', [\App\Http\Controllers\ArticleController::class, 'singleBlog']);
+});
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -36,8 +43,7 @@ Route::group([
 Route::group([
     'middleware' => ['api', 'admin'],
     'prefix' => 'admin'
-], function ()
-{
+], function () {
     Route::apiResource('admGate', \App\Http\Controllers\Admin\AdmGateController::class);
     Route::post('gateGuard', [\App\Http\Controllers\Admin\AdmGateController::class, 'gateGuard']);
     Route::apiResource('users', \App\Http\Controllers\Admin\AdmUserController::class);
@@ -47,7 +53,7 @@ Route::group([
     Route::apiResource('categories', \App\Http\Controllers\Admin\AdmCategoryController::class);
     Route::apiResource('articles', \App\Http\Controllers\Admin\AdmArticleController::class);
     Route::apiResource('products', \App\Http\Controllers\Admin\AdmProductController::class);
-    Route::get('productsForHome', [\App\Http\Controllers\Admin\AdmProductController::class, 'productsForHome']);
+    Route::delete('removeProductPic/{id}', [\App\Http\Controllers\Admin\AdmProductController::class, 'removeProductPic']);
     Route::apiResource('tickets', \App\Http\Controllers\Admin\AdmTicketController::class);
     Route::apiResource('conversations', \App\Http\Controllers\Admin\AdmConversationController::class);
     Route::apiResource('tags', \App\Http\Controllers\Admin\AdmTagController::class);
