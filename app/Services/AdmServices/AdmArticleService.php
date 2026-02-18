@@ -93,17 +93,10 @@ class AdmArticleService extends BaseService
     }
 
 
-
-
-
-
-
     public function showWithRelation(int $id)
     {
         return $this->repository->showWithRelation($id);
     }
-
-
 
 
     public function updateWithRelation(int $id, UpdateArticleRequest $request)
@@ -122,8 +115,11 @@ class AdmArticleService extends BaseService
 
             if ($request->hasFile('media')) {
                 $image = $article->media;
-                Storage::disk('public')->delete('/media/' . $image->name);
-                $image->delete();
+
+                if ($image) {
+                    Storage::disk('public')->delete('/media/' . $image->name);
+                    $image->delete();
+                }
 
                 $image = $request->file('media');
                 $image_name = time() . '-' . Str::random(20) . '.' . $image->getClientOriginalExtension();
