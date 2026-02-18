@@ -33,11 +33,6 @@ class AdmProductService extends BaseService
         return $this->repository->productWithRelations();
     }
 
-    public function productsForHome()
-    {
-        return $this->repository->productsForHome();
-    }
-
 
 
     public function showWithRelations(Product $product)
@@ -83,7 +78,7 @@ class AdmProductService extends BaseService
 
 
             //Start Media
-            foreach ($request->media as $image) {
+            foreach ($request->file() as $image) {
                 $image_name = time() . '-' . Str::random(20) . '.' . $image->getClientOriginalExtension();
                 $path = $image->storeAs('media', $image_name, 'public');
                 $absolutePath = Storage::disk('public')->path($path);
@@ -143,12 +138,6 @@ class AdmProductService extends BaseService
     {
 
         try {
-
-
-            foreach ($product->media as $item) {
-                Storage::disk('public')->delete('/media/' . $item->name);
-                $item->delete();
-            }
             $product->tags()->detach();
             $product->attribute_values()->detach();
 
@@ -238,6 +227,15 @@ class AdmProductService extends BaseService
 
 
 
+    public function removeProductPic(int $id)
+    {
+        $image = $this->mediaRepository->find($id);
+        Storage::disk('public')->delete('/media/' . $image->name);
+        return $this->mediaRepository->delete($id);
+    }
+
+
+
 
 
     public function deleteWithRelations(Product $product)
@@ -256,4 +254,6 @@ class AdmProductService extends BaseService
             return response()->json($e->getMessage(), HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    
 }
