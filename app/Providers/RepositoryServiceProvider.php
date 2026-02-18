@@ -32,8 +32,12 @@ use App\Repositories\AdmRepo\EditorMedia\AdmEditorMediaRepository;
 use App\Repositories\AdmRepo\EditorMedia\AdmEditorMediaRepositoryInterface;
 use App\Repositories\AdmRepo\Gate\AdmGateRepository;
 use App\Repositories\AdmRepo\Gate\AdmGateRepositoryInterface;
+use App\Repositories\Article\ArticleRepository;
+use App\Repositories\Article\ArticleRepositoryInterface;
 use App\Repositories\Media\MediaRepository;
 use App\Repositories\Media\MediaRepositoryInterface;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -59,6 +63,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AdmGateRepositoryInterface::class, AdmGateRepository::class);
         $this->app->bind(AdmAttributeRepositoryInterface::class, AdmAttributeRepository::class);
         $this->app->bind(AdmAttribute_valueRepositoryInterface::class, AdmAttribute_valueRepository::class);
+        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
     }
 
 }
