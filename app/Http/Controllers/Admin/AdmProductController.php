@@ -23,11 +23,6 @@ class AdmProductController extends Controller
         return $this->service->productWithRels();
     }
 
-    public function productsForHome()
-    {
-        return $this->service->productsForHome();
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -66,6 +61,13 @@ class AdmProductController extends Controller
     public function update(Product $product, UpdateProductRequest $request)
     {
         return $this->service->updateProduct($product, $request);
+    }
+
+
+
+    public function removeProductPic(int $id)
+    {
+        return $this->service->removeProductPic($id);
     }
 
     /**
