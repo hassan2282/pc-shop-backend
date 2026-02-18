@@ -40,4 +40,5 @@ class AdmArticleRepository extends BaseRepository implements AdmArticleRepositor
         ->find($id);
     }
 
+
 }

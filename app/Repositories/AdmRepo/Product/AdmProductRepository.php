@@ -24,21 +24,6 @@ class AdmProductRepository extends BaseRepository implements AdmProductRepositor
     }
 
 
-    public function productsForHome()
-    {
-        return $this->model->with([
-            'media' => fn($query) => $query->limit(1),
-            'category:id,name',
-            'attribute_values.attribute'
-        ])
-        ->orderBy('id','DESC')
-        ->get() ;
-    }
-
-
-
-
-
 
     public function showProduct(Product $product)
     {
