@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -12,6 +13,7 @@ Route::group([], function () {
     Route::get('singleProduct/{id}', [\App\Http\Controllers\ProductController::class, 'singleProduct']);
     Route::get('blogShow', [\App\Http\Controllers\ArticleController::class, 'blogShow']);
     Route::get('singleBlog/{id}', [\App\Http\Controllers\ArticleController::class, 'singleBlog']);
+    Route::apiResource('userTicket', TicketController::class);
 });
 
 Route::group([
