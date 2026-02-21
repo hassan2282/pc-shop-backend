@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\AdmRepo\Conversation\AdmConversationRepositoryInterface;
 use App\Repositories\Ticket\TicketRepositoryInterface;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class TicketService
 {
@@ -46,12 +47,18 @@ class TicketService
     }
 
 
-
     public function destroy($id)
     {
         $target = $this->ticket_repository->find($id);
-        if ($target && !$target->admin_id) {
-            return $target->delete();
+        try {
+            if(empty($target->admin_id)) {
+                $delete = $target->delete();
+                return response()->json($delete, HttpResponse::HTTP_OK);
+            }else{
+                return response()->json('شما اجازه حذف این پیام را ندارید', HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
