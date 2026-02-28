@@ -52,7 +52,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        return $this->service->createWithRel($request->toArray());
     }
 
     /**
