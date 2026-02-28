@@ -9,6 +9,11 @@ class ArticleController extends Controller
 
     public function __construct(readonly protected ArticleService $service) {}
 
+    public function index()
+    {
+        return $this->service->allWithRelations();
+    }
+
     public function blogShow()
     {
         return $this->service->blogShow();
