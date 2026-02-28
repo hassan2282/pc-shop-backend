@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Address extends Model
 {
-    protected $guarded = ['id'];
+    protected $guarded = [''];
 
     public function user(): BelongsTo
     {
