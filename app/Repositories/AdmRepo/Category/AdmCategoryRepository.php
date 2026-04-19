@@ -11,4 +11,16 @@ class AdmCategoryRepository extends BaseRepository implements AdmCategoryReposit
     {
         parent::__construct($category);
     }
+
+    public function allWithRels()
+    {
+        $data = Category::with([
+            'parent:id,name',
+            'children:id,name,parent_id',
+            'children.children:id,name,parent_id',
+            'children.children.children:id,name,parent_id'
+        ])
+            ->get();
+        return $data;
+    }
 }

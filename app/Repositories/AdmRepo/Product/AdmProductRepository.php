@@ -15,12 +15,6 @@ class AdmProductRepository extends BaseRepository implements AdmProductRepositor
     
     public function productWithRelations()
     {
-        return $this->model->with([
-            'media' => fn($query) => $query->limit(1),
-            'category:id,name',
-        ])
-        ->orderBy('id','DESC')
-        ->get() ;
     }
 
 

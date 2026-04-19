@@ -13,7 +13,6 @@ class AdmArticleRepository extends BaseRepository implements AdmArticleRepositor
     }
 
 
-
     public function articlesWithRelation()
     {
         return Article::query()
@@ -23,7 +22,6 @@ class AdmArticleRepository extends BaseRepository implements AdmArticleRepositor
             'category:id,name',
             'user:id,first_name,last_name',
         ])
-        ->latest()
         ->get();
     }
 

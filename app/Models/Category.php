@@ -15,7 +15,7 @@ class Category extends Model
 
     protected $guarded = ['id'];
 
-    
+
     protected static function booted()
     {
         static::creating(function ($category) {
@@ -26,11 +26,14 @@ class Category extends Model
         });
     }
 
-
-
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id');
     }
 
     public function articles(): HasMany

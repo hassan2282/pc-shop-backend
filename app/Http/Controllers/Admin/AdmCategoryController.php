@@ -10,12 +10,17 @@ class AdmCategoryController extends Controller
     public function __construct(readonly protected AdmCategoryService $service)
     {
     }
+
+    public function all()
+    {
+         return $this->service->allWithRels();
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return $this->service->allWithRelation(['parent']);
+        return $this->service->allWithFilter();
     }
 
     /**

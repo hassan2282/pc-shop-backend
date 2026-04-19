@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 class BaseRepository implements EloquentRepositoryInterface
 {
@@ -14,19 +13,28 @@ class BaseRepository implements EloquentRepositoryInterface
         $this->model = $model;
     }
 
-    public function all(): Collection
+    public function query()
+    {
+        return $this->model->query();
+    }
+
+    public function all()
     {
         return $this->model->orderBy('id','DESC')->get();
     }
 
-    public function allWithPaginate($paginate = 30, $type = 'DESC')
+    public function allWithPaginate($paginate = 5, $type = 'DESC')
     {
-        return $this->model->orderBy('id', $type)->paginate($paginate);
+        $paginateCount = count($this->model->all()) / 5;
+        $items = $this->model->orderBy('id', $type)->paginate($paginate);
+         return response()->json([$paginateCount, $items]);
     }
 
     public function allWithRelation(array $relations)
     {
-        return $this->model->with($relations)->orderBy('id','DESC')->get();
+        $paginateCount = count($this->model->all()) / 5;
+        $items = $this->model->with($relations)->orderBy('id','DESC')->paginate(5);
+        return response()->json([$paginateCount, $items]);
     }
 
     public function findWithRelation(int $id, array $relations)
@@ -36,7 +44,7 @@ class BaseRepository implements EloquentRepositoryInterface
 
     public function find(int $id): ?Model
     {
-        return $this->model->find($id);
+        return $this->model->findOrFail($id);
     }
 
     public function status(int $id):bool

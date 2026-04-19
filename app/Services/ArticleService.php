@@ -10,6 +10,11 @@ class ArticleService
     public function __construct(readonly protected ArticleRepositoryInterface $repository,) {}
 
 
+    public function allWithRelations()
+    {
+       return $this->repository->allWithRelations(['category','media','user']);    
+    }
+
     public function blogShow()
     {
         return $this->repository->blogShow();

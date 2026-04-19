@@ -2,6 +2,7 @@
 
 namespace App\Services\AdmServices;
 
+use App\Filters\ArticleFilter;
 use App\Http\Requests\Admin\Article\StoreArticleRequest;
 use App\Http\Requests\Admin\Article\UpdateArticleRequest;
 use App\Http\Resources\AdmArticleResource;
@@ -22,7 +23,7 @@ class AdmArticleService extends BaseService
     public function __construct(
         AdmArticleRepositoryInterface $repository,
         readonly protected MediaRepositoryInterface $mediaRepository,
-        readonly protected AdmTagRepositoryInterface $tagRepository
+        readonly protected AdmTagRepositoryInterface $tagRepository,
     ) {
         parent::__construct($repository, StoreArticleRequest::class, UpdateArticleRequest::class);
     }
@@ -30,10 +31,17 @@ class AdmArticleService extends BaseService
 
     public function articlesWithRelation()
     {
-        $collection = $this->repository->articlesWithRelation();
-        $data = AdmArticleResource::collection($collection);
-
-        return response()->json($data, HttpResponse::HTTP_OK);
+        $queryParams = [
+            'q' => request()->q,
+            'status' => request()->status,
+        ];
+        try {
+            $query = $this->repository->query();
+            $filter = (new ArticleFilter($queryParams, 5, $query))->getResult();
+            return response()->json($filter);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
 

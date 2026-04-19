@@ -17,7 +17,7 @@ class GateFactory extends Factory
     public function definition(): array
     {
         return [
-            'gkey' => 'admin',
+            'gkey' => bcrypt('123456789123456789'),
         ];
     }
 }

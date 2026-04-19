@@ -11,8 +11,14 @@ class PermissionSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    
     public function run(): void
     {
-        Permission::factory()->count(20)->create();
+        $permissions = [
+            'guest','users', 'orders', 'tickets', 'products', 'articles', 'permissions', 'superAdmin'
+        ];
+        foreach($permissions as $permission){
+            Permission::create(['name' => $permission]);
+        }
     }
 }

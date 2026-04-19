@@ -3,7 +3,6 @@
 namespace App\Services\AdmServices;
 
 use Illuminate\Http\JsonResponse;
-use Pest\Support\Arr;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 abstract class BaseService
@@ -23,6 +22,12 @@ abstract class BaseService
     {
         $all = $this->repository->all();
         return response()->json($all, HttpResponse::HTTP_OK);
+    }
+
+    public function allWithPaginate()
+    {
+        $allWithPaginate =  $this->repository->allWithPaginate();
+        return response()->json($allWithPaginate);
     }
 
     public function allWithRelation(array $relations)

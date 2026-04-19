@@ -16,7 +16,7 @@ class AdmUserController extends Controller
      */
     public function index()
     {
-        return $this->service->allWithRelation(['role','media']);
+        return $this->service->allWithFilters();
     }
 
     /**

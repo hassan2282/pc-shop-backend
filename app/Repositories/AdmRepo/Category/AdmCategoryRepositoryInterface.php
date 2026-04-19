@@ -7,4 +7,6 @@ use App\Repositories\EloquentRepositoryInterface;
 interface AdmCategoryRepositoryInterface extends EloquentRepositoryInterface
 {
 
+    public function allWithRels();
+
 }

@@ -12,6 +12,12 @@ class AdmArticleController extends Controller
     public function __construct(readonly protected AdmArticleService $service)
     {
     }
+
+
+    public function all()
+    {
+        return $this->service->index();
+    }
     /**
      * Display a listing of the resource.
      */

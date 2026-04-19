@@ -12,6 +12,11 @@ class AdmRoleController extends Controller
     public function __construct(readonly protected AdmRoleService $service)
     {
     }
+
+    public function all()
+    {
+        return $this->service->index();
+    }
     /**
      * Display a listing of the resource.
      */
@@ -42,6 +47,11 @@ class AdmRoleController extends Controller
     public function show(int $id)
     {
         return $this->service->findWithRelation($id, ['permissions']);
+    }
+
+    public function getRole()
+    {
+        return $this->service->getRole();
     }
 
     /**

@@ -13,10 +13,20 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
-        $permissions = Permission::all();
-        Role::factory()->count(20)->create()->each(function($role) use ($permissions){
-            $randomPermissions = $permissions->random(rand(1,7))->pluck('id');
-            $role->permissions()->attach($randomPermissions);
-        });
+
+        $roles = [
+            'Guest' => ['guest'],
+            'Admin' => ['orders', 'tickets', 'products', 'articles',],
+            'Vendor' => ['users', 'orders', 'tickets', 'products', 'articles', 'permissions'],
+            'Owner' => ['users', 'orders', 'tickets', 'products', 'articles', 'permissions', 'superAdmin'],
+        ];
+
+        foreach ($roles as $roleName => $permissionNames) {
+            $role = Role::create(['name' => $roleName]);
+            foreach ($permissionNames as $permissionName) {
+                $permission = Permission::where('name', $permissionName)->first();
+                $permission->roles()->syncWithoutDetaching(['role_id' => $role->id]);
+            };
+        };
     }
 }

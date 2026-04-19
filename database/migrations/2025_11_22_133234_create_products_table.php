@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->longText('text');
             $table->string('slug')->unique();
+            $table->integer('views')->default(0);
             $table->boolean('status')->default(1);
             $table->foreignId('category_id')->constrained('categories');
             $table->timestamps();

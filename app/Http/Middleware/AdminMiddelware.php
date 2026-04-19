@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddelware
@@ -16,18 +16,11 @@ class AdminMiddelware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!auth()->check()){
-            return response()->json([
-                'message' => 'لطفا ابتدا وارد حساب کاربری خود شوید'
-            ], 401);
+
+        if (!!auth()->user() && auth()->user()->role_id !== 1) {
+            return $next($request);
         }
 
-        if(auth()->user()->role_id == 1){
-            return response()->json([
-                'message' => 'شما اجازه ورود به این قسمت را ندارید'
-            ], 403);
-        }
-
-        return $next($request);
+        return abort(401);
     }
 }

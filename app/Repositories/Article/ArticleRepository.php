@@ -29,15 +29,30 @@ class ArticleRepository implements ArticleRepositoryInterface
             'user:id,username',
             'category:id,name',
         ])
-        ->find($id);
+            ->find($id);
 
-        $blogWithRels = Article::select(['id','category_id','description'])
-        ->with([
-            'category:id,name',
-        ])
-        ->limit(7)
-        ->get();
+        $blogWithRels = Article::select(['id', 'category_id', 'description'])
+            ->with([
+                'category:id,name',
+            ])
+            ->limit(7)
+            ->get();
 
         return response()->json([$article, $blogWithRels], HttpResponse::HTTP_ACCEPTED);
+    }
+
+
+
+    public function allWithRelations(array $relations)
+    {
+        $allBlogsWithRelations = Article::select(['id','author_id','category_id','description','created_at'])
+        ->with([
+            'media:id,name,mediable_id,mediable_type',
+            'user:id,username',
+            'category:id,name',
+        ])->get();
+
+
+        return response()->json($allBlogsWithRelations, HttpResponse::HTTP_ACCEPTED);
     }
 }

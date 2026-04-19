@@ -13,9 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::factory()->create([
-            'name' => 'کاربر',
-        ]);
+        // Role::factory()->create([
+        //     'name' => 'کاربر',
+        // ]);
 
         $this->call([
             PermissionSeeder::class,
@@ -26,6 +26,10 @@ class DatabaseSeeder extends Seeder
             TicketSeeder::class,
             TagSeeder::class,
             GateSeeder::class,
+            ProvincesSeeder::class,
+            CitiesSeeder::class,
+            ArticleSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }

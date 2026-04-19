@@ -10,12 +10,17 @@ class AdmPermissionController extends Controller
     public function __construct(readonly protected AdmPermissionService $service)
     {
     }
+
+    public function all()
+    {
+        return $this->service->index();
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->allWithPaginate();
     }
 
     /**

@@ -8,9 +8,7 @@ use App\Services\AdmServices\AdmGateService;
 
 class AdmGateController extends Controller
 {
-    public function __construct(readonly protected AdmGateService $service)
-    {
-    }
+    public function __construct(readonly protected AdmGateService $service) {}
     /**
      * Display a listing of the resource.
      */
@@ -31,7 +29,6 @@ class AdmGateController extends Controller
     {
         return $this->service->storeKey($request);
     }
-
 
     /**
      * Remove the specified resource from storage.

@@ -21,7 +21,7 @@ class UsersSeeder extends Seeder
             'phone' => '09170249855',
             'email' => 'taghavey.hassan@gmail.com',
             'status' => true,
-            'role_id' => 2,
+            'role_id' => 4,
             'email_verified_at' => now(),
             'password' => Hash::make('123456789'),
             'remember_token' => Str::random(10),

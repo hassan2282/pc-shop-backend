@@ -15,7 +15,7 @@ class AdmConversationController extends Controller
      */
     public function index()
     {
-        return $this->service->allWithLastTicket();
+        return $this->service->allWithFilters();
     }
 
     /**

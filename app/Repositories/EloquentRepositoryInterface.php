@@ -3,13 +3,14 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 interface EloquentRepositoryInterface
 {
-    public function all(): Collection;
+    public function all();
 
-    public function allWithPaginate($paginate = 30, $type = 'DESC');
+    public function query();
+
+    public function allWithPaginate($paginate = 5, $type = 'DESC');
 
     public function allWithRelation(array $relations);
 

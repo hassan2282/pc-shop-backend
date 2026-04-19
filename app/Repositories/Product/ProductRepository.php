@@ -3,10 +3,16 @@
 namespace App\Repositories\Product;
 
 use App\Models\Product;
+use App\Repositories\BaseRepository;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
-class ProductRepository implements ProductRepositoryInterface
+class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
+
+    public function __construct(Product $product)
+    {
+        parent::__construct($product);
+    }
 
     public function productsForHome()
     {
@@ -15,8 +21,8 @@ class ProductRepository implements ProductRepositoryInterface
             'category:id,name',
             'attribute_values.attribute'
         ])
-        ->orderBy('id','DESC')
-        ->get() ;
+            ->orderBy('id', 'DESC')
+            ->get();
     }
 
 
@@ -26,9 +32,7 @@ class ProductRepository implements ProductRepositoryInterface
             'media:id,name,mediable_id,mediable_type',
             'attribute_values.attribute',
         ])
-        ->find($id);
+            ->find($id);
         return response()->json($product, HttpResponse::HTTP_ACCEPTED);
     }
-
-
 }

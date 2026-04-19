@@ -11,6 +11,11 @@ public function __construct(readonly protected ProductService $service)
 {
 }
 
+    public function productsWithFilters()
+    {
+        return $this->service->productsWithFilters();
+    }
+
     public function productsForHome()
     {
         return $this->service->productsForHome();

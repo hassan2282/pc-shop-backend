@@ -2,6 +2,7 @@
 
 namespace App\Services\AdmServices;
 
+use App\Filters\ProductFilter;
 use App\Http\Requests\Admin\Product\StoreProductRequest;
 use App\Http\Requests\Admin\Product\UpdateProductRequest;
 use App\Models\Product;
@@ -30,7 +31,13 @@ class AdmProductService extends BaseService
 
     public function productWithRels()
     {
-        return $this->repository->productWithRelations();
+        $queryParams = [
+            'q' => request()->q,
+            'status' => request()->status,
+        ];
+        $query = $this->repository->query();
+        $filter = (new ProductFilter($queryParams, 5, $query))->getResult();
+        return response()->json($filter);
     }
 
 

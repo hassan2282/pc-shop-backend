@@ -16,6 +16,7 @@ class AdmRoleService extends BaseService
         parent::__construct($repository, StoreRoleRequest::class, UpdateRoleRequest::class);
     }
 
+
     public function storeWithPivot(Request $request) {
         try{
             $role =  Role::create([
@@ -62,6 +63,17 @@ class AdmRoleService extends BaseService
             }
         }catch(\Exception $e){
             return response()->json($e->getMessage(), HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    public function getRole()
+    {
+        $user = auth()->user();
+        if(isset($user)){
+            return response()->json($user->role_id);
+        }else{
+            return response()->json('اجازه دسترسی ندارید', HttpResponse::HTTP_FORBIDDEN);
         }
     }
     

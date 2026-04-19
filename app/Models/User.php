@@ -6,7 +6,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -17,6 +16,8 @@ class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
+    protected $guarded = ['id','role_id'];
 
     public function getJWTIdentifier()
     {
@@ -76,15 +77,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->morphOne(Media::class, 'mediable');
     }
 
-
     public function address(): HasOne
     {
         return $this->hasOne(Address::class);
-    }
-
-    public function role(): BelongsTo
-    {
-        return $this->belongsTo(Role::class);
     }
 
     public function articles(): HasMany
@@ -100,5 +95,15 @@ class User extends Authenticatable implements JWTSubject
     public function conversations(): HasMany
     {
         return $this->hasMany(Conversation::class);
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasPermission($permission)
+    {
+        return !! $this->role->permissions()->where('name', $permission->name)->exists();;
     }
 }

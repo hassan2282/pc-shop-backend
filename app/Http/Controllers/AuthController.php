@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
+use function PHPUnit\Framework\isEmpty;
+
 class AuthController extends Controller
 {
     /**
@@ -20,25 +22,24 @@ class AuthController extends Controller
      */
     public function __construct(readonly protected MediaService $mediaService)
     {
-//        $this->middleware('auth:api', ['except' => ['login','register']]);
+        //        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
 
     public function register()
     {
-        try{
-
+        try {
             // اعتبارسنجی داده‌های ورودی
             $validator = Validator::make(request()->all(), [
                 'username' => 'required|unique:users|string|max:255|min:6',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:6|confirmed',
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             }
-    
+
             // ایجاد کاربر جدید
             $user = User::create([
                 'username' => request('username'),
@@ -48,14 +49,14 @@ class AuthController extends Controller
             !$user && throw new \Error('کاربر ساخته نشد');
             // تولید توکن دسترسی برای کاربر
             $token = auth()->login($user);
-    
+
             $authUser = auth()->user();
             $userResource =  userApiResource::make($authUser);
             return response()->json([
                 'user' => $userResource,
                 'authorisation' => $this->respondWithToken($token)
             ])->cookie('jwt_token', $token, 10080, '/', null, true, true, 'None');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json($e->getMessage(), ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -72,19 +73,21 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = request(['email', 'password']);
-
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
         $user = \auth()->user();
-        if($token){
-           $authUser =  userApiResource::make($user);
+        if ($token) {
+            $authUser =  userApiResource::make($user);
         }
         return response()->json([
             'user' => $authUser,
             'authorisation' => $this->respondWithToken($token)
         ])->cookie('jwt_token', $token, 10080, '/', null, true, true, 'None');
     }
+
+
 
     public function update(AuthUpdateProfileRequest $request, $id)
     {
@@ -96,10 +99,9 @@ class AuthController extends Controller
             $updatedUser = $user->update($limitRequest);
             if ($updatedUser) return response()->json(['success' => 'آپدیت با موفقیت انجام شد'], ResponseAlias::HTTP_OK);
             if (!$updatedUser) return response()->json(['error' => 'متاسفانه آپدیتی صورت نگرفت'], ResponseAlias::HTTP_BAD_REQUEST);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json($e->getMessage(), ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
-
     }
 
     public function update_password(UpdatePasswordRequest $request)
@@ -112,7 +114,7 @@ class AuthController extends Controller
             ]);
             if ($updatePassword) return response()->json(['success' => 'آپدیت با موفقیت انجام شد'], ResponseAlias::HTTP_OK);
             if (!$updatePassword) return response()->json(['error' => 'متاسفانه آپدیتی صورت نگرفت'], ResponseAlias::HTTP_BAD_REQUEST);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -129,8 +131,8 @@ class AuthController extends Controller
      */
     public function me()
     {
-        if(! auth()->user()){
-            return response()->json('user not founded', ResponseAlias::HTTP_UNAUTHORIZED );
+        if (! auth()->user()) {
+            return response()->json('user not founded', ResponseAlias::HTTP_UNAUTHORIZED);
         }
         $targetUser = userApiResource::make(auth()->user());
         return response()->json($targetUser);
