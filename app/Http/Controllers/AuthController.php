@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthUpdateProfileRequest;
 use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Resources\NotificationResource;
 use App\Http\Resources\UserApiResource;
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
 use App\Services\MediaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -48,6 +50,7 @@ class AuthController extends Controller
             ]);
             !$user && throw new \Error('کاربر ساخته نشد');
             // تولید توکن دسترسی برای کاربر
+            $user->notify(new WelcomeNotification());
             $token = auth()->login($user);
 
             $authUser = auth()->user();
@@ -160,6 +163,20 @@ class AuthController extends Controller
         # When access token will be expired, we are going to generate a new one wit this function
         # and return it here in response
         return $this->respondWithToken(auth()->refresh());
+    }
+
+
+
+
+    public function userNotify()
+    {
+        try{
+            $notifications = auth()->user()->notifications()->orderBy('created_at', 'DESC')->get();
+            $resource = NotificationResource::collection($notifications);
+            return response()->json($resource, 201);
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     /**
