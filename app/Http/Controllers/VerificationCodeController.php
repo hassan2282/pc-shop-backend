@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckEmailRequest;
 use App\Http\Requests\CheckVerify;
+use App\Http\Requests\NewPassRequest;
 use App\Models\Verification_code;
 use App\Http\Requests\StoreVerification_codeRequest;
 use App\Http\Resources\userApiResource;
@@ -132,8 +133,6 @@ class VerificationCodeController extends Controller
     }
 
 
-
-
     public function checkEmailCode(CheckEmailRequest $request)
     {
         try {
@@ -174,7 +173,26 @@ class VerificationCodeController extends Controller
 
 
 
-    public function setNewPass() {}
+    public function setNewPassword(NewPassRequest $request)
+    {
+        try{
+            $user = User::where('email', $request->email)->first();
+            $update = $user->update([
+                'password' => bcrypt($request->password),
+            ]);
+            if ($user) {
+                $token = auth()->login($user);
+                $authUser = auth()->user();
+                $userResource =  userApiResource::make($authUser);
+                return response()->json([
+                    'user' => $userResource,
+                    'authorisation' => $this->respondWithToken($token)
+                ])->cookie('jwt_token', $token, 10080, '/', null, true, true, 'None');
+            };
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(), HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 
