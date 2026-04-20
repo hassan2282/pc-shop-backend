@@ -38,6 +38,7 @@ Route::group([
     Route::post('check-verify', [VerificationCodeController::class, 'checkVerify']);
     Route::post('forget-password', [VerificationCodeController::class, 'forgetPassword']);
     Route::post('email-verify', [VerificationCodeController::class, 'checkEmailCode']);
+    Route::post('new-pass', [VerificationCodeController::class, 'setNewPassword']);
     Route::post('rm-code', [VerificationCodeController::class, 'destroy']);
 });
 
@@ -45,6 +46,7 @@ Route::group([
     'middleware' => 'api',
 ], function () {
     Route::post('profile-avatar', [AuthController::class, 'avatar']);
+    Route::get('user-notify', [AuthController::class, 'userNotify']);
     Route::get('provinces', [ProvinceController::class, 'index']);
     Route::get('cities/{id}', [CityController::class, 'find']);
     Route::post('address', [AddressController::class, 'create']);
