@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\User;
+use App\Notifications\TicketNotification;
 use App\Repositories\AdmRepo\Conversation\AdmConversationRepositoryInterface;
 use App\Repositories\Ticket\TicketRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
@@ -27,18 +29,25 @@ class TicketService
 
     public function store(array $data)
     {
+        $admins = User::where('role_id', '>', 1)->get();
         try {
             if (isset($data['conversation_id'])) {
                 $ticket = $this->ticket_repository->create([
                     'conversation_id' => $data['conversation_id'],
                     'text' => $data['text'],
                 ]);
+                foreach ($admins as $admin) {
+                    $admin->notify(new TicketNotification($ticket));
+                }
             } else {
                 $conversation = $this->conversation_repository->create(['user_id' => $data['user_id']]);
                 $ticket = $this->ticket_repository->create([
                     'conversation_id' => $conversation->id,
                     'text' => $data['text'],
                 ]);
+                foreach ($admins as $admin) {
+                    $admin->notify(new TicketNotification($ticket));
+                }
             };
             return $ticket;
         } catch (\Exception $e) {
@@ -51,10 +60,10 @@ class TicketService
     {
         $target = $this->ticket_repository->find($id);
         try {
-            if(empty($target->admin_id)) {
+            if (empty($target->admin_id)) {
                 $delete = $target->delete();
                 return response()->json($delete, HttpResponse::HTTP_OK);
-            }else{
+            } else {
                 return response()->json('شما اجازه حذف این پیام را ندارید', HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
             }
         } catch (\Exception $e) {
