@@ -6,6 +6,8 @@ use App\Filters\ProductFilter;
 use App\Http\Requests\Admin\Product\StoreProductRequest;
 use App\Http\Requests\Admin\Product\UpdateProductRequest;
 use App\Models\Product;
+use App\Models\User;
+use App\Notifications\CreateProductNotification;
 use App\Repositories\AdmRepo\Attribute\AdmAttributeRepositoryInterface;
 use App\Repositories\AdmRepo\Attribute_value\AdmAttribute_valueRepositoryInterface;
 use App\Repositories\AdmRepo\Product\AdmProductRepositoryInterface;
@@ -63,6 +65,12 @@ class AdmProductService extends BaseService
             ];
 
             $productRes = $this->repository->create($product);
+            if($productRes){
+                $admins = User::where('role_id', '>', 1)->get();
+                foreach($admins as $admin){
+                    $admin->notify(new CreateProductNotification($productRes->id));
+                }
+            }
             // End Product
 
 
