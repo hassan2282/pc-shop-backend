@@ -26,6 +26,18 @@ class UsersSeeder extends Seeder
             'password' => Hash::make('123456789'),
             'remember_token' => Str::random(10),
         ]);
+        User::create([
+            'username' => 'ali4225',
+            'first_name' => 'سید علی',
+            'last_name' => 'تقوی',
+            'phone' => '09170249762',
+            'email' => 'ali@gmail.com',
+            'status' => true,
+            'role_id' => 1,
+            'email_verified_at' => now(),
+            'password' => Hash::make('123456789'),
+            'remember_token' => Str::random(10),
+        ]);
         User::factory()->count(20)->create();
     }
 }
