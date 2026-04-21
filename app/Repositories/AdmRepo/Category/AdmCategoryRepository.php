@@ -19,8 +19,7 @@ class AdmCategoryRepository extends BaseRepository implements AdmCategoryReposit
             'children:id,name,parent_id',
             'children.children:id,name,parent_id',
             'children.children.children:id,name,parent_id'
-        ])
-            ->get();
+        ])->get();
         return $data;
     }
 }
