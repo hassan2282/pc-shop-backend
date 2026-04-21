@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Admin\AdmNotificationController;
 use App\Http\Controllers\Admin\AdmPermissionController;
 use App\Http\Controllers\Admin\AdmRoleController;
 use App\Http\Controllers\OrderController;
@@ -83,6 +84,8 @@ Route::group([
     Route::apiResource('orders', \App\Http\Controllers\Admin\AdmOrderController::class);
     Route::apiResource('transactions', \App\Http\Controllers\TransactionController::class);
     Route::get('getRole', [AdmRoleController::class, 'getRole']);
+    Route::get('/notifications/all', [AdmNotificationController::class, 'all']);
+    Route::get('/notifications/show', [AdmNotificationController::class, 'show']);
 });
 
 // End Admin Panel Routes
