@@ -85,7 +85,7 @@ Route::group([
     Route::apiResource('transactions', \App\Http\Controllers\TransactionController::class);
     Route::get('getRole', [AdmRoleController::class, 'getRole']);
     Route::get('/notifications/all', [AdmNotificationController::class, 'all']);
-    Route::get('/notifications/show', [AdmNotificationController::class, 'show']);
+    Route::post('/notification/read/{id}', [AdmNotificationController::class, 'read']);
 });
 
 // End Admin Panel Routes
