@@ -9,7 +9,7 @@ class AdmNotificationController extends Controller
     public function all()
 {
     try {
-        $admin = User::where('role_id', '>', 1)->firstOrFail();
+        $admin = auth()->user();
         $notifications = $admin->notifications()->paginate(10);
         
         return response()->json([
@@ -22,8 +22,11 @@ class AdmNotificationController extends Controller
 }
 
 
-    public function show()
+    public function read(string $id)
     {
-        
+        $notif = auth()->user()->notifications()->find($id);
+        if($notif){
+            $notif->markAsRead();
+        };
     }
 }
