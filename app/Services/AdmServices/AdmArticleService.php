@@ -8,6 +8,8 @@ use App\Http\Requests\Admin\Article\UpdateArticleRequest;
 use App\Http\Resources\AdmArticleResource;
 use App\Models\Article;
 use App\Models\Tag;
+use App\Models\User;
+use App\Notifications\CreateArticleNotification;
 use App\Repositories\AdmRepo\Article\AdmArticleRepositoryInterface;
 use App\Repositories\AdmRepo\Tag\AdmTagRepositoryInterface;
 use App\Repositories\Media\MediaRepositoryInterface;
@@ -58,6 +60,12 @@ class AdmArticleService extends BaseService
                 'category_id' => $request->category_id,
             ];
             $articleRes = $this->repository->create($article);
+            if ($articleRes) {
+                $admins = User::where('role_id', '>', 1)->get();
+                foreach ($admins as $admin) {
+                    $admin->notify(new CreateArticleNotification());
+                }
+            }
             // End Article
 
 
